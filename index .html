@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2025 Data Processing — SS3 Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green:#008751;--green-dark:#005c36;--green-light:#00b368;--gold:#F4A900;
+    --bg:#0a1a0f;--surface:#0f2318;--surface2:#152d1e;--card:#1a3828;--border:#234d35;
+    --text:#e8f5ec;--muted:#7aab8a;--trap:#ff6b6b;--hint:#4ecdc4;--analogy:#f4a900;
+    --answer:#00b368;--topic:#a78bfa;--examiner:#f9a8d4;--marks:#86efac;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+  /* HEADER */
+  header{background:linear-gradient(135deg,var(--green-dark) 0%,var(--bg) 60%);border-bottom:2px solid var(--green);padding:1.4rem 1.5rem 1rem;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+  .header-inner{max-width:900px;margin:0 auto;}
+  .brand{display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem;}
+  .flag{display:flex;width:32px;height:21px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.4);}
+  .flag span{flex:1;}.flag .g{background:#008751;}.flag .w{background:#fff;}
+  h1{font-family:'Syne',sans-serif;font-size:clamp(1.15rem,4vw,1.65rem);font-weight:800;color:#fff;line-height:1.1;}
+  h1 span{color:var(--gold);}
+  .subtitle{font-size:.72rem;color:var(--muted);margin-top:.15rem;letter-spacing:.05em;text-transform:uppercase;}
+  .stats-bar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.7rem;}
+  .stat-pill{background:var(--surface2);border:1px solid var(--border);border-radius:50px;padding:.28rem .75rem;font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:.32rem;}
+  .stat-pill strong{color:var(--text);font-weight:600;}
+  .dot{width:6px;height:6px;border-radius:50%;}
+  .dot-green{background:var(--green-light);}.dot-gold{background:var(--gold);}.dot-purple{background:var(--topic);}
+  .tabs{display:flex;gap:.45rem;}
+  .tab-btn{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;padding:.42rem 1rem;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.03em;}
+  .tab-btn.active{background:var(--green);border-color:var(--green);color:#fff;}
+  .tab-btn:hover:not(.active){border-color:var(--green);color:var(--green-light);}
+
+  /* CONTROLS */
+  .controls{max-width:900px;margin:1.1rem auto .45rem;padding:0 1rem;display:flex;flex-direction:column;gap:.55rem;}
+  .search-box{position:relative;}
+  .search-box input{width:100%;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:.65rem 1rem .65rem 2.5rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;}
+  .search-box input:focus{border-color:var(--green);}
+  .search-box input::placeholder{color:var(--muted);}
+  .search-icon{position:absolute;left:.82rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.9rem;}
+  .filters{display:flex;gap:.38rem;flex-wrap:wrap;}
+  .filter-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:.32rem .75rem;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.76rem;cursor:pointer;transition:all .2s;font-weight:500;}
+  .filter-btn.active,.filter-btn:hover{background:var(--green);border-color:var(--green);color:#fff;}
+
+  /* PROGRESS */
+  .progress-section{max-width:900px;margin:.65rem auto;padding:0 1rem;}
+  .progress-bar-wrap{background:var(--surface);border-radius:50px;height:5px;overflow:hidden;margin-bottom:.3rem;}
+  .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--gold));border-radius:50px;transition:width .4s ease;}
+  .progress-label{font-size:.7rem;color:var(--muted);}
+  .progress-label span{color:var(--gold);font-weight:600;}
+  .result-count{font-size:.75rem;color:var(--muted);padding:0 1rem;max-width:900px;margin:0 auto .35rem;}
+
+  /* SHARED LIST WRAPPER */
+  .questions{max-width:900px;margin:0 auto 2.5rem;padding:0 1rem;display:flex;flex-direction:column;gap:.65rem;}
+
+  /* OBJECTIVE CARD */
+  .q-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;transition:all .25s;animation:slideIn .3s ease both;}
+  @keyframes slideIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .q-card:hover{border-color:var(--green);box-shadow:0 4px 18px rgba(0,135,81,.12);}
+  .q-card.done{border-color:var(--green-light);opacity:.72;}
+  .q-header{display:flex;align-items:flex-start;gap:.65rem;padding:.85rem 1.05rem;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;}
+  .q-num{background:var(--green-dark);color:var(--gold);font-family:'Syne',sans-serif;font-weight:800;font-size:.8rem;width:29px;height:29px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;}
+  .q-card.done .q-num{background:var(--green);color:#fff;}
+  .q-text{flex:1;font-size:.86rem;line-height:1.5;color:var(--text);}
+  .q-text em{color:var(--gold);font-style:normal;font-weight:500;}
+  .q-chevron{color:var(--muted);font-size:.95rem;flex-shrink:0;margin-top:7px;transition:transform .25s;}
+  .q-card.open .q-chevron,.t-card.open .q-chevron{transform:rotate(180deg);}
+  .topic-tag{display:inline-block;background:rgba(167,139,250,.1);color:var(--topic);border:1px solid rgba(167,139,250,.22);border-radius:6px;font-size:.66rem;padding:.1rem .42rem;font-weight:500;margin-bottom:.5rem;letter-spacing:.02em;}
+  .q-details{display:none;padding:0 1.05rem 1.05rem;border-top:1px solid var(--border);}
+  .q-card.open .q-details{display:block;}
+  .detail-grid{display:flex;flex-direction:column;gap:.5rem;margin-top:.85rem;}
+  .detail-item{border-radius:10px;padding:.65rem .82rem;font-size:.82rem;line-height:1.55;}
+  .detail-label{font-family:'Syne',sans-serif;font-size:.63rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.22rem;}
+  .d-trap{background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.17);}
+  .d-trap .detail-label{color:var(--trap);}
+  .d-hint{background:rgba(78,205,196,.07);border:1px solid rgba(78,205,196,.17);}
+  .d-hint .detail-label{color:var(--hint);}
+  .d-analogy{background:rgba(244,169,0,.07);border:1px solid rgba(244,169,0,.17);}
+  .d-analogy .detail-label{color:var(--analogy);}
+  .answer-box{background:rgba(0,179,104,.1);border:1.5px solid rgba(0,179,104,.28);border-radius:10px;padding:.65rem .82rem;display:flex;align-items:center;gap:.65rem;margin-top:.38rem;}
+  .answer-letter{background:var(--green);color:#fff;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;width:32px;height:32px;border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .answer-text{font-size:.84rem;color:var(--answer);font-weight:500;line-height:1.4;}
+  .done-btn{margin-top:.85rem;background:transparent;border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:.76rem;padding:.38rem .85rem;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:.32rem;}
+  .done-btn:hover{border-color:var(--green);color:var(--green-light);}
+  .q-card.done .done-btn,.t-card.done .done-btn{background:rgba(0,179,104,.1);border-color:var(--green-light);color:var(--green-light);}
+
+  /* THEORY CARD */
+  .t-card{background:var(--card);border:1.5px solid var(--border);border-radius:16px;overflow:hidden;transition:all .25s;animation:slideIn .3s ease both;}
+  .t-card:hover{border-color:var(--gold);box-shadow:0 4px 18px rgba(244,169,0,.09);}
+  .t-card.done{border-color:var(--green-light);opacity:.72;}
+  .t-header{display:flex;align-items:flex-start;gap:.65rem;padding:.85rem 1.05rem;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent;}
+  .t-badge{background:linear-gradient(135deg,var(--green-dark),#1a3828);border:1px solid var(--gold);color:var(--gold);font-family:'Syne',sans-serif;font-weight:800;font-size:.68rem;padding:.18rem .48rem;border-radius:7px;flex-shrink:0;margin-top:3px;white-space:nowrap;}
+  .t-card.done .t-badge{background:var(--green);border-color:var(--green-light);color:#fff;}
+  .t-question{flex:1;font-size:.86rem;line-height:1.5;color:var(--text);}
+  .t-question strong{color:var(--gold);}
+  .t-marks{font-size:.67rem;color:var(--marks);background:rgba(134,239,172,.1);border:1px solid rgba(134,239,172,.2);border-radius:5px;padding:.08rem .38rem;margin-left:.35rem;white-space:nowrap;}
+  .t-details{display:none;padding:0 1.05rem 1.05rem;border-top:1px solid var(--border);}
+  .t-card.open .t-details{display:block;}
+  .t-section-label{font-family:'Syne',sans-serif;font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:.25rem;display:flex;align-items:center;gap:.35rem;}
+  .t-keypoints{background:rgba(78,205,196,.07);border:1px solid rgba(78,205,196,.18);border-radius:10px;padding:.7rem .85rem;margin-top:.85rem;font-size:.82rem;line-height:1.6;}
+  .t-keypoints .t-section-label{color:var(--hint);}
+  .t-keypoints ul{padding-left:1.05rem;margin-top:.28rem;}
+  .t-keypoints ul li{margin-bottom:.2rem;}
+  .t-model{background:rgba(0,179,104,.07);border:1px solid rgba(0,179,104,.2);border-radius:10px;padding:.7rem .85rem;margin-top:.5rem;font-size:.82rem;line-height:1.65;}
+  .t-model .t-section-label{color:var(--answer);}
+  .t-model .model-body{white-space:pre-line;}
+  .t-model strong{color:var(--gold);}
+  .t-examiner{background:rgba(249,168,212,.07);border:1px solid rgba(249,168,212,.18);border-radius:10px;padding:.7rem .85rem;margin-top:.5rem;font-size:.81rem;line-height:1.55;}
+  .t-examiner .t-section-label{color:var(--examiner);}
+  .t-mistake{background:rgba(255,107,107,.07);border:1px solid rgba(255,107,107,.17);border-radius:10px;padding:.7rem .85rem;margin-top:.5rem;font-size:.81rem;line-height:1.55;}
+  .t-mistake .t-section-label{color:var(--trap);}
+
+  /* SECTION DIVIDER */
+  .section-divider{max-width:900px;margin:1.3rem auto .65rem;padding:0 1rem;display:flex;align-items:center;gap:.7rem;}
+  .section-divider span{font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);white-space:nowrap;}
+  .section-divider::before,.section-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  .empty{text-align:center;padding:2.5rem 1rem;color:var(--muted);}
+  .empty h3{font-family:'Syne',sans-serif;color:var(--text);margin-bottom:.4rem;}
+  .hidden{display:none!important;}
+  footer{text-align:center;padding:1.2rem;color:var(--muted);font-size:.7rem;border-top:1px solid var(--border);}
+  footer strong{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="flag"><span class="g"></span><span class="w"></span><span class="g"></span></div>
+      <div>
+        <h1>2025 Data Processing <span>SS3</span></h1>
+        <div class="subtitle">WAEC Complete Study Guide</div>
+      </div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-pill"><span class="dot dot-green"></span><strong id="obj-total">40</strong> Objectives</div>
+      <div class="stat-pill"><span class="dot dot-purple"></span><strong id="theory-total">0</strong> Theory Qs</div>
+      <div class="stat-pill"><span class="dot dot-gold"></span><strong id="done-count">0</strong> Mastered</div>
+    </div>
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab('objectives')">📝 Objectives (40)</button>
+      <button class="tab-btn" onclick="switchTab('theory')">✍️ Theory (18)</button>
+    </div>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-box">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search" placeholder="Search questions, topics, keywords…">
+  </div>
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="pending">Pending</button>
+    <button class="filter-btn" data-filter="done">Mastered ✓</button>
+  </div>
+</div>
+
+<div class="progress-section">
+  <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-fill" style="width:0%"></div></div>
+  <div class="progress-label">Progress: <span id="progress-text">0 / 40</span> mastered</div>
+</div>
+<div class="result-count" id="result-count"></div>
+
+<div id="tab-objectives"><div class="questions" id="obj-list"></div></div>
+<div id="tab-theory" class="hidden"><div id="theory-container"></div></div>
+
+<footer><strong>2025 WAEC Data Processing</strong> · SS3 Complete Study Aid · Nigeria 🇳🇬</footer>
+
+<script>
+// ══════════════════════════════════════════
+//  OBJECTIVES DATA
+// ══════════════════════════════════════════
+const objectives = [
+  {num:1,text:"The <em>Difference Engine</em> was developed by?",topic:"History of Computers",trap:"Students confuse Blaise Pascal (invented the Pascaline calculator) with Charles Babbage. Both are 'fathers' of something — but different things.",hint:"'Difference' → think Babbage. Pascal made a simple calculator; Babbage made the complex engine.",analogy:"It's like confusing Dangote (built refineries) with Otedola (fuel/oil business). Both are big names, but different inventions!",answerLetter:"B",answerText:"Charles Babbage"},
+  {num:2,text:"Convert A0B₁₆ to binary",topic:"Number Base Conversion",trap:"Students try hex→decimal→binary (long route) and make errors. Also mixing up A=10, B=11.",hint:"Convert each hex digit directly to 4-bit binary: A=1010, 0=0000, B=1011 → 101000001011",analogy:"Translating Yoruba → Igbo via English wastes time. Skip the middle man — translate each word directly!",answerLetter:"C",answerText:"101000001011₂"},
+  {num:3,text:"Audio data are produced from?",topic:"Types of Data / Multimedia",trap:"Students pick 'graphics' thinking audio and visuals go together, or 'pictures' because phones produce both.",hint:"Audio = Sound. The question tells you — audio is what you hear.",analogy:"When you record a voice note on WhatsApp, what comes out? Sound! Not a picture.",answerLetter:"D",answerText:"Sounds"},
+  {num:4,text:"Which variable is an example of numeric data? A. 568  B. B2  C. #10.00  D. Twenty-five",topic:"Data Types",trap:"Students pick '#10.00' thinking money is a number. The # symbol makes it alphanumeric. 'Twenty-five' is a word, not a digit.",hint:"Numeric data = pure digits only, usable in calculations. No symbols, no letters.",analogy:"Your WAEC score (568) can be added up. But 'B2' (like a seat number on a bus) cannot be calculated.",answerLetter:"A",answerText:"568"},
+  {num:5,text:"The generation of computers in which the transistor was FIRST introduced is?",topic:"Generations of Computers",trap:"Students say 'third generation' forgetting transistors came in 2nd gen. Others confuse with ICs (3rd gen).",hint:"1st Gen=Vacuum tubes, 2nd Gen=Transistors, 3rd Gen=ICs, 4th Gen=Microprocessors.",analogy:"Think Nokia 3310 (2nd gen phones) — they first introduced keypads. Later phones improved it, but Nokia started it.",answerLetter:"C",answerText:"Second Generation"},
+  {num:6,text:"One application of ICT in medicine is?",topic:"Applications of ICT",trap:"'Computer Aided Learning' sounds medical but it's for education. 'Computer Aided Manufacturing' is for factories.",hint:"CAT scan (Computerized Axial Tomography) — body scan using computers and X-rays, used in hospitals.",analogy:"When someone goes to LUTH or UCH for a 'body scan', that machine is a CT/CAT scan — pure ICT in medicine.",answerLetter:"C",answerText:"Computerized Axial Tomography"},
+  {num:7,text:"Which reason justifies the prevalence of Personal Digital Assistance (PDA) devices?",topic:"Personal Digital Assistants",trap:"Option A says 'light weight AND very expensive' — being expensive doesn't make something prevalent (common)!",hint:"'Prevalence' means widespread use. Portability and usefulness everywhere = widespread adoption.",analogy:"Why does every SS3 student have a phone? Because you can use it anywhere — on the bus, at home, in school. Portability!",answerLetter:"B",answerText:"Very portable and can be used everywhere"},
+  {num:8,text:"Which action is achieved by right-clicking a computer mouse?",topic:"Computer Mouse Operations",trap:"Students say 'closing windows' (that's the X button) or 'minimizing' (that's left-clicking the minimize button).",hint:"Right-click = context menu. It shows options based on what you clicked.",analogy:"Like pressing 'options' on your phone when you hold down an app icon — it shows what you can DO with it. Contextual menu!",answerLetter:"D",answerText:"Opening of contextual menus"},
+  {num:9,text:"The manipulation of digitized information by computer is known as?",topic:"Information Processing",trap:"'Data collation' (arranging data) and 'data mining' (finding patterns) sound similar but are different from the overall process.",hint:"The WHOLE process of handling digital data by computer = Information Processing.",analogy:"When JAMB collects your answers, arranges them, scores them and produces results — that entire activity is information processing.",answerLetter:"D",answerText:"Information Processing"},
+  {num:10,text:"Which statement does NOT explain information processing?",topic:"Information Processing",trap:"All options sound plausible. The key is 'saving' alone is not processing — no transformation happens.",hint:"Processing involves TRANSFORMATION of data. Saving is just storage.",analogy:"Writing your name in a notebook is just saving (storage). But calculating your average from test marks is processing.",answerLetter:"A",answerText:"Act of saving a document"},
+  {num:11,text:"The part labelled X in Figure 1 (Information Cycle) is?",topic:"Information Cycle",trap:"Students confuse 'feedback' with 'output.' Output is the result; feedback is the return loop that improves the process.",hint:"X is the arrow going BACK to the input stage. What goes back? Feedback.",analogy:"Your teacher marks your test (output), then tells you what you got wrong so you can improve (feedback). That return = feedback!",answerLetter:"C",answerText:"Feedback"},
+  {num:12,text:"Which gadget transmits BOTH visual and audio information?",topic:"Communication Devices",trap:"Facsimile (fax) = visual only. Radio = audio only. Walkie-Talkie = audio only.",hint:"You need BOTH video + audio. Only one device does both.",analogy:"When you watch NTA News or Channels TV, you see the presenter AND hear their voice. Television = both!",answerLetter:"C",answerText:"Television"},
+  {num:13,text:"The underlying technology in the network connection in Figure 2 is?",topic:"Network Technologies",trap:"Students see 'wireless' and pick 'Ethernet' — but Ethernet uses cables! 'Laser jet' is a printer technology.",hint:"Figure 2 shows devices connected wirelessly at short range. Short-range wireless = Bluetooth.",analogy:"When you share files using Xender or Bluetooth between nearby phones — no cable, short range. That's Figure 2!",answerLetter:"A",answerText:"Bluetooth"},
+  {num:14,text:"One limitation of the network type in Figure 2 (Bluetooth) is?",topic:"Network Limitations",trap:"Students pick 'cost of maintenance is high' — Bluetooth is cheap! 'Weather affects data sharing' = satellite networks.",hint:"Bluetooth's biggest weakness = short range (~10 metres). Walk too far, connection drops.",analogy:"You've tried to Bluetooth something to a friend but walked to another room and it disconnected. Distance!",answerLetter:"B",answerText:"Distance covered is short"},
+  {num:15,text:"The interface in Figure 3 is used for?",topic:"Application Software / Email",trap:"'Creating new sites' is web design. 'Creating portable documents' is PDF tools. 'Sending SMS' is for phones.",hint:"Figure 3 shows Inbox, Sent Items, Drafts, Junk Email — classic email folders!",analogy:"The interface looks exactly like your Gmail or Yahoo Mail — where you read and send emails.",answerLetter:"C",answerText:"Sending and receiving e-mails"},
+  {num:16,text:"The part labelled III in Figure 3 (email interface) is used for?",topic:"Email Client Features",trap:"Students confuse 'Drafts' (unsent) with 'Sent Items' (already sent) and 'Deleted Items' (removed emails).",hint:"Count the folders: I=Other, II=Sent Items, III=Deleted Items, IV=Archive.",analogy:"On your Gmail, when you delete an email, it goes to Trash — same as Deleted Items. It doesn't disappear immediately.",answerLetter:"A",answerText:"Keeping/storing deleted emails"},
+  {num:17,text:"What happens when Shift is pressed while deleting a file in Windows?",topic:"OS / File Management",trap:"Students think it goes to Recycle Bin like normal deletion. The Shift key BYPASSES the Recycle Bin entirely.",hint:"Normal Delete → Recycle Bin. Shift + Delete → Gone forever.",analogy:"Normally throwing rubbish in a bin — you can retrieve it. But Shift+Delete is like burning the rubbish immediately. No going back!",answerLetter:"B",answerText:"Permanently deleted from the computer"},
+  {num:18,text:"Correct order of steps to change to landscape orientation in MS Word (Figure 4)?",topic:"MS Word / Page Setup",trap:"Students mix up the order of clicking labelled parts in Figure 4.",hint:"Landscape: Click Landscape (I) → Select scope 'Apply to' (IV) → Click OK (V). = I, IV, V.",analogy:"Ordering food: Choose your meal (I) → Choose portion/who it's for (IV) → Pay and confirm (V).",answerLetter:"B",answerText:"I, IV and V"},
+  {num:19,text:"Correct order to REVERT to portrait orientation after typing in landscape (Figure 4)?",topic:"MS Word / Page Setup",trap:"Students pick the same answer as Q18 not realizing the 'Apply to' option changes when reverting.",hint:"Portrait revert = I, III, V. Different 'Apply to' selection (III instead of IV).",analogy:"Same restaurant — changing your order back. Similar steps but a different portion option (III not IV).",answerLetter:"A",answerText:"I, III and V"},
+  {num:20,text:"What happens when a user clicks the MS Excel clipboard icon shown in Figure 5?",topic:"MS Excel / Clipboard",trap:"Students confuse 'Merge cells' (spans columns) with the Copy clipboard icon.",hint:"Clipboard icon in Excel = Copy. Places selected content onto the clipboard for pasting.",analogy:"It's like pressing Ctrl+C on your keyboard. The copy sits on your 'clipboard' waiting to be pasted.",answerLetter:"A",answerText:"A copy of the selection is put on the clipboard"},
+  {num:21,text:"To add a new row ABOVE EKITI in Figure 6 (Excel), the user right-clicks on?",topic:"MS Excel / Row Operations",trap:"Students right-click row 5 thinking 'EKITI is row 5.' But EKITI is in row 6. New row inserts ABOVE where you right-click.",hint:"New row inserts above whichever row you right-click. EKITI = row 6. Right-click row 6 → Insert.",analogy:"If you're at position 6 in a queue and someone joins in front of you, they take position 6 and push you to 7. Right-click YOUR position.",answerLetter:"D",answerText:"Row 6 and then click on insert"},
+  {num:22,text:"Which is NOT considered when designing a database in MS Access?",topic:"Database Design",trap:"Students think 'how forms will be used' sounds important. But forms are an interface concern — not a core structure concern.",hint:"Database design focuses on tables, relationships, fields, keys, and purpose. Forms are designed AFTER.",analogy:"When WAEC designs an exam, they first decide subjects and marking — not yet how the answer sheet LOOKS. That comes later!",answerLetter:"A",answerText:"How forms will be used"},
+  {num:23,text:"Tables in MS Access are created using the following methods EXCEPT?",topic:"Microsoft Access",trap:"'Table insertion' SOUNDS like a valid Access method. Students who don't use Access assume it exists.",hint:"Valid methods = Datasheet View, Design View, Table Wizard. 'Table insertion' does NOT exist in Access.",analogy:"You can write an assignment by hand, type it, or use a template. But 'assignment insertion' is not a method — it's made up!",answerLetter:"C",answerText:"Table insertion"},
+  {num:24,text:"Keyboard shortcut for adding a new slide in PowerPoint?",topic:"MS PowerPoint Shortcuts",trap:"Students confuse Ctrl+H (Find & Replace) with Ctrl+M. Some guess Alt+M.",hint:"Ctrl + M = New slide in PowerPoint. M = 'More' slides!",analogy:"You want MORE slides in your presentation — press Ctrl + M. M for More!",answerLetter:"B",answerText:"Ctrl + M"},
+  {num:25,text:"An example of web design software is?",topic:"Application Software",trap:"'CSS' is a style language NOT software. 'MS Outlook' is email. 'SPSS' is statistics.",hint:"MS Publisher can create web pages and HTML content — Microsoft's desktop publishing and basic web design tool.",analogy:"CSS is like grammar rules of English — not a textbook itself. MS Publisher is the actual textbook you use to design pages.",answerLetter:"C",answerText:"MS Publisher"},
+  {num:26,text:"Part labelled VII in Figure 7 (CorelDraw Toolbox) is used to?",topic:"CorelDraw / Graphics",trap:"Students confuse the Shape Tool with the Selection tool. Selection tool selects; Shape Tool edits nodes/curves.",hint:"VII = Shape Tool in CorelDraw. It edits nodes and curves of a vector object.",analogy:"Selection tool = picking up a ball of clay. Shape Tool = pressing your fingers INTO it to mold and reshape it.",answerLetter:"A",answerText:"Shape objects"},
+  {num:27,text:"Erratic movement of the mouse pointer is caused by?",topic:"Computer Maintenance / Hardware",trap:"Students pick 'hardware failure' thinking it's serious. Erratic movement is usually a simple, fixable cause.",hint:"Erratic = jumpy/inconsistent. Dirty mouse ball (old mice) or dirty optical sensor (modern mice).",analogy:"When your phone screen doesn't respond where you touch it, it's usually DIRTY. Clean it and it works. Same with a mouse!",answerLetter:"B",answerText:"Dirty mouse ball"},
+  {num:28,text:"Suitable method of removing particles from the keyboard is?",topic:"Computer Maintenance",trap:"'Dripping wet cloth' can damage electronics. 'Iron brush' can break keys. 'Hot air' can melt components.",hint:"Compressed air safely blows dust out from between keys without touching or damaging them.",analogy:"It's like using your mouth to blow dirt off a book without touching it. Compressed air does the same, just stronger!",answerLetter:"C",answerText:"Using compressed air"},
+  {num:29,text:"Which statement is true about preventing phishing?",topic:"Cybersecurity / Phishing",trap:"Students pick 'Ensure antivirus is updated regularly' — antivirus helps generally but doesn't specifically prevent phishing.",hint:"Phishing tricks you into clicking malicious links in emails. The direct prevention = don't click suspicious links.",analogy:"If a stranger hands you a sweet on the street, you don't eat it. Same way, don't click links from unknown emails!",answerLetter:"B",answerText:"Do not click on links in e-mails from unknown sources"},
+  {num:30,text:"Preventive maintenance in the computer room includes the following EXCEPT?",topic:"Computer Maintenance",trap:"Students think rugs make a room comfortable and therefore belong in a computer room. Comfort ≠ safety for computers.",hint:"Rugs generate static electricity (harmful to components) and trap dust. They are a hazard, NOT a maintenance measure.",analogy:"Good room = good ventilation, no dust, proper lighting. But rugs everywhere trap dirt and cause electric shocks. Odd one out!",answerLetter:"D",answerText:"The use of rugs on the floor"},
+  {num:31,text:"When cleaning the computer system, it is ADVISABLE to?",topic:"Computer Maintenance / Safety",trap:"Students pick 'restart the computer first' — the computer is still powered. Dangerous when cleaning!",hint:"Safety first! POWER OFF and disconnect from power source before cleaning. Avoids electric shock and short circuits.",analogy:"Before an electrician touches wires in your house, they switch off the main power first. Same logic — turn OFF and unplug!",answerLetter:"B",answerText:"Turn off the computer and disconnect from power source"},
+  {num:32,text:"A system analyst is a professional who?",topic:"ICT Careers",trap:"Students confuse 'designs flowcharts' (a tool, not the main role) with the full job. Others think they write code like programmers.",hint:"A system analyst DESIGNS and IMPLEMENTS computer-based solutions — bridges business problems and technology.",analogy:"Like an architect — they don't lay bricks (programmer's job) but they design the plan AND oversee construction. That's a system analyst!",answerLetter:"B",answerText:"Designs and implements new computer-based solutions"},
+  {num:33,text:"Which one of the following programs is NOT a type of virus?",topic:"Computer Viruses / Malware",trap:"Trojan horse sounds dangerous and 'virus-like' so students include it. But a Trojan does NOT self-replicate like a virus.",hint:"A virus SELF-REPLICATES. A Trojan horse does NOT replicate — it disguises itself to trick users.",analogy:"A real virus spreads person to person (like flu). A Trojan is like a fake doctor who enters your house pretending to help. He doesn't spread — he deceives!",answerLetter:"D",answerText:"Trojan horse"},
+  {num:34,text:"The computer virus WAITS for a trigger during which phase?",topic:"Computer Viruses / Phases",trap:"Students confuse 'dormant phase' (waiting/hiding) with 'trigger phase' (when the event occurs). The virus WAITS during dormant.",hint:"Virus phases: Dormant (waiting) → Trigger (event occurs) → Execution (attack) → Propagation (spreads).",analogy:"It's like a thief who hides under the bed, waiting until everyone is asleep before striking. That hiding = Dormant phase!",answerLetter:"A",answerText:"Dormant phase"},
+  {num:35,text:"The SQL constraint used to ensure accuracy and consistency of data in a relational database is?",topic:"Database / SQL Constraints",trap:"'Default constraint' sets a default value. 'Index constraint' improves search speed. 'Unique constraint' prevents duplicates.",hint:"Integrity constraint = rules that ensure data is accurate, consistent, and valid across the entire database.",analogy:"A school register rule: 'you cannot enter a student twice' and 'age must be a real number.' Those rules ensure accuracy and consistency.",answerLetter:"C",answerText:"Integrity constraint"},
+  {num:36,text:"For a one-to-one relationship in a database, both fields should have?",topic:"Database Relationships / Keys",trap:"Students think only the primary key needs to be unique. For one-to-one, the FOREIGN key must ALSO be unique.",hint:"One-to-one = one record in Table A links to exactly ONE record in Table B. Both keys must be unique.",analogy:"One husband, one wife (legally). Both must be 'unique' — a husband can't marry two wives AND a wife can't have two husbands. Both unique!",answerLetter:"B",answerText:"Both primary and foreign key fields should have unique key index"},
+  {num:37,text:"An advantage of MANUAL file over COMPUTER file is?",topic:"File Management",trap:"Students think manual files are more efficient or faster — they're NOT. Computers win on speed, efficiency and storage.",hint:"Manual files (paper) CANNOT get corrupted by viruses, software crashes, or accidental formatting.",analogy:"A printed WAEC result can't be hacked or wiped by a virus. But a digital one on a flash drive can be destroyed. Paper wins here!",answerLetter:"C",answerText:"Risk of corrupted data is much less"},
+  {num:38,text:"A file changing to a shortcut icon in a removable device implies?",topic:"Computer Viruses / File Management",trap:"Students think the file is corrupt (damaged). But it's hidden — a shortcut virus placed a link in its location.",hint:"Shortcut virus hides your files and replaces them with shortcuts. The original still exists — it's just hidden.",analogy:"Going to collect your result but finding a NOTE saying 'go to principal's office.' Result isn't destroyed — it's redirected. Note = shortcut icon!",answerLetter:"D",answerText:"There is a link to the file"},
+  {num:39,text:"Objectives of secure database design include the following EXCEPT?",topic:"Database Security",trap:"'Simplicity' sounds like a good principle. Simple systems are easier to manage — so students think it belongs.",hint:"Core security objectives = Secrecy, Integrity, Availability (CIA). Simplicity is NOT a security objective.",analogy:"Objectives of a good security guard: keep secrets, maintain discipline, always be available. 'Be simple/easy-going' is NOT one!",answerLetter:"A",answerText:"Simplicity"},
+  {num:40,text:"Which is NOT an advantage of distributed database?",topic:"Distributed Databases",trap:"'Need for complex software' sounds like a technical feature. Students assume it's an advantage because distributed systems are 'advanced.'",hint:"Advantages = Better response, Lower communication cost, Improved reliability. Needing complex software is a DISADVANTAGE.",analogy:"Business branches in Lagos, Kano, Abuja, PH is great — faster service. But managing all four needs complex coordination. That's a disadvantage!",answerLetter:"D",answerText:"Need for complex software"}
+];
+
+// ══════════════════════════════════════════
+//  THEORY DATA
+// ══════════════════════════════════════════
+const theory = [
+  // SECTION A
+  {id:"SA1ai",section:"Section A — Essay",badge:"Q1a(i)",
+   question:"<strong>Explain the term:</strong> Data Processing",marks:"2 marks",
+   keypoints:["Define what data processing IS — not just 'using a computer'","Mention: raw data collected → manipulated/transformed → meaningful output/information","Key contrast: 'raw facts (data)' → 'meaningful information'"],
+   modelAnswer:"Data processing is a series of operations/actions carried out to collect, organise, manipulate, and convert raw facts (data) into meaningful information.\n\nOR: Data processing is the manipulation of raw data by a computer or other device to produce useful and meaningful information.",
+   examinerTip:"Examiners want to see 'raw data' and 'meaningful information/output' — that contrast is the core. Don't just write 'processing data on a computer.'",
+   commonMistake:"Writing only 'the use of a computer to process data' — too vague, earns no marks. You must show the INPUT → PROCESS → OUTPUT concept."},
+
+  {id:"SA1aii",section:"Section A — Essay",badge:"Q1a(ii)",
+   question:"<strong>Explain the term:</strong> Data Collation",marks:"2 marks",
+   keypoints:["Must convey: gathering data from multiple sources","Must mention: arranging/organising into a structured/usable format","Must include the purpose: for input into the computer or further processing"],
+   modelAnswer:"Data collation is the systematic arrangement/gathering of data collected from different sources into a structured and usable format in preparation for input into the computer.\n\nOR: It is the process of gathering and arranging data from various sources into a machine-readable form.",
+   examinerTip:"Two key ideas must appear: (1) gathering from different sources, and (2) arranging/organising for use. Miss either and you lose marks.",
+   commonMistake:"Confusing data collation with data collection. Collection = just gathering; collation = gathering AND systematically organising."},
+
+  {id:"SA1b",section:"Section A — Essay",badge:"Q1b",
+   question:"<strong>Describe the Data Processing Cycle</strong>",marks:"4 marks",
+   keypoints:["Must name ALL stages in the correct order","Required stages: Input → Processing → Output → Storage","Feedback is optional but earns a bonus","Brief description of each stage is ideal for full marks"],
+   modelAnswer:"The Data Processing Cycle is the sequence of stages involved in processing data from input to output and storage. It consists of:\n\n1. INPUT — Raw data is collected and entered into the computer system.\n2. PROCESSING — The data is manipulated, sorted, calculated or transformed.\n3. OUTPUT — Processed data (information) is presented to the user (e.g. on screen or printed).\n4. STORAGE — The information is saved for future use.\n(5. FEEDBACK — Output is returned to the input stage to improve the process — optional.)",
+   examinerTip:"Always write the stages as a numbered list or clearly labelled points. Writing them in a paragraph without labels risks the examiner missing them.",
+   commonMistake:"Forgetting STORAGE as a stage — most students write only Input, Processing, Output. The cycle is incomplete without storage."},
+
+  {id:"SA1c",section:"Section A — Essay",badge:"Q1c",
+   question:"State <strong>four</strong> benefits of the computer as a tool for processing data",marks:"4 marks",
+   keypoints:["Must state FOUR clear, distinct benefits","Each benefit = 1 mark","Benefits must relate to data PROCESSING specifically","Avoid vague answers like 'it is good' or 'it is useful'"],
+   modelAnswer:"1. High Speed — Computers process data at very high speed compared to manual methods.\n2. Accuracy — Computers produce highly accurate results, reducing human error.\n3. Large Storage Capacity — Computers can store and retrieve huge volumes of data.\n4. Consistency/Reliability — Computers handle repetitive processing tasks without fatigue.\n\nOther acceptable answers:\n• Cost-effective over time\n• Fast data retrieval\n• Ability to handle large volume of data simultaneously\n• Improved reliability of output",
+   examinerTip:"Write them as a numbered list. Examiners mark point by point — a clear list makes it easy for them to award your marks.",
+   commonMistake:"Writing general computer benefits (like 'it can browse the internet') instead of data PROCESSING benefits. Stay on topic."},
+
+  {id:"SA2a",section:"Section A — Essay",badge:"Q2a",
+   question:"Identify the parts labelled <strong>A, B, C and D</strong> in Figure 1 (computer setup diagram)",marks:"4 marks",
+   keypoints:["Must correctly match each label to the correct device","Each correct identification = 1 mark","A=Monitor, B=Printer, C=Mouse, D=Keyboard"],
+   modelAnswer:"A — Monitor (Visual Display Unit / VDU)\nB — Printer\nC — Mouse\nD — Keyboard",
+   examinerTip:"If unsure about a label, use elimination. A computer setup always has these 4 components — match visible shapes to device names.",
+   commonMistake:"Calling the system unit a 'CPU' alone may lose marks — write 'System Unit' to be safe. CPU is just one component inside the system unit."},
+
+  {id:"SA2b",section:"Section A — Essay",badge:"Q2b",
+   question:"For each device (A, B, C, D), indicate whether it is an <strong>Input</strong> or <strong>Output</strong> device",marks:"4 marks",
+   keypoints:["Input = sends data INTO the computer","Output = receives processed data FROM the computer","A (Monitor)=Output, B (Printer)=Output, C (Mouse)=Input, D (Keyboard)=Input"],
+   modelAnswer:"Device A — Monitor: OUTPUT device\nDevice B — Printer: OUTPUT device\nDevice C — Mouse: INPUT device\nDevice D — Keyboard: INPUT device",
+   examinerTip:"Ask yourself: does this device send information TO the computer, or receive information FROM the computer? That determines input/output.",
+   commonMistake:"Students say the monitor is both input and output — a standard monitor is OUTPUT only. Touchscreens are both input and output."},
+
+  {id:"SA2c",section:"Section A — Essay",badge:"Q2c",
+   question:"Name <strong>two</strong> devices that can be used for BOTH input and output operations",marks:"2 marks",
+   keypoints:["Must name devices that function as BOTH input AND output","Each correct device = 1 mark","Common examples: Touchscreen, Headset, Modem, Network Interface Card (NIC)"],
+   modelAnswer:"1. Touchscreen — receives touch input AND displays output\n2. Headset (with microphone) — microphone inputs audio; speakers output audio\n\nOther accepted answers:\n• Modem (sends and receives data)\n• Network Interface Card (NIC)\n• Magnetic disk drive (reads and writes data)",
+   examinerTip:"Don't write 'computer' or 'laptop' as the device — name a specific peripheral component that serves both functions.",
+   commonMistake:"Writing 'keyboard and mouse' — these are INPUT only. Touchscreen is the classic both-input-and-output answer."},
+
+  {id:"SA3a",section:"Section A — Essay",badge:"Q3a",
+   question:"With a well-labelled diagram, explain: (i) Simplex  (ii) Half Duplex  (iii) Full Duplex modes of information transmission",marks:"6 marks",
+   keypoints:["Each mode requires: a definition AND a diagram = 2 marks each","Simplex: one-way only (A→B only)","Half Duplex: both directions but NOT simultaneously","Full Duplex: both directions SIMULTANEOUSLY"],
+   modelAnswer:"(i) SIMPLEX — Communication occurs in ONE direction only. The sender can only send; the receiver can only receive.\nDiagram: [Sender] ——→ [Receiver]\n\n(ii) HALF DUPLEX — Communication occurs in BOTH directions, but NOT at the same time. Only one party transmits at a time.\nDiagram: [Device A] ⇄ [Device B]  (note: not simultaneously)\n\n(iii) FULL DUPLEX — Communication occurs in BOTH directions SIMULTANEOUSLY. Both parties can send and receive at the same time.\nDiagram: [Device A] ⇆ [Device B]  (bidirectional, both at once)",
+   examinerTip:"Draw diagrams with arrows showing direction of communication. Label your diagram clearly — 'well-labelled' is its own mark. Don't skip the diagrams!",
+   commonMistake:"Forgetting the word 'simultaneously' for full duplex. Half duplex and full duplex both go in both directions — the difference is TIMING."},
+
+  {id:"SA3b",section:"Section A — Essay",badge:"Q3b",
+   question:"State ONE example each of: (i) Simplex  (ii) Half Duplex  (iii) Full Duplex mode of transmission",marks:"3 marks",
+   keypoints:["Each correct example = 1 mark","Examples must match the correct transmission mode","Must be communication/transmission examples"],
+   modelAnswer:"(i) Simplex example: Television broadcast / Radio broadcast / Keyboard to CPU\n\n(ii) Half Duplex example: Walkie-Talkie / CB Radio (Citizens Band Radio)\n\n(iii) Full Duplex example: Telephone call / Mobile phone conversation / Video call (Zoom/WhatsApp call)",
+   examinerTip:"The walkie-talkie example for half duplex is the most memorable — one person says 'over' before the other can speak. Classic half duplex!",
+   commonMistake:"Using 'television' for full duplex — a TV broadcast is one-way (simplex) because viewers can't transmit back to the station."},
+
+  {id:"SA3c",section:"Section A — Essay",badge:"Q3c",
+   question:"Name ONE component of a data communication system",marks:"1 mark",
+   keypoints:["Any ONE valid component of a data communication system","Must be a specific named component, not a vague term"],
+   modelAnswer:"Any ONE of the following:\n• Sender / Source\n• Receiver / Destination\n• Transmission medium / Channel (e.g. cable, fibre optic, wireless)\n• Message / Data\n• Protocol\n• Modem\n• Router",
+   examinerTip:"This is just 1 mark — write ONE clear component. Don't overthink it. 'Transmission medium' or 'Sender' are safe answers.",
+   commonMistake:"Writing 'computer' — that is a device, not a component of the communication system model. Use correct terminology."},
+
+  {id:"SA4a",section:"Section A — Essay",badge:"Q4a",
+   question:"Differentiate between <strong>hackers</strong> and <strong>spammers</strong>",marks:"4 marks",
+   keypoints:["Must clearly define BOTH terms","Must highlight what makes them DIFFERENT","Hacker = gains unauthorized access to systems","Spammer = sends unsolicited/bulk messages/emails"],
+   modelAnswer:"HACKER: A hacker is a person who gains unauthorized access to a computer system or network, usually to steal, alter, or destroy data.\n\nSPAMMER: A spammer is a person who sends large volumes of unsolicited/unwanted messages (usually emails or texts) to many recipients, often for advertising or malicious purposes.\n\nKEY DIFFERENCE: A hacker breaks INTO systems/networks, while a spammer floods communication channels with unwanted messages without necessarily gaining system access.",
+   examinerTip:"Structure your answer clearly: define hacker, define spammer, then state the key difference. Examiners award marks for each part.",
+   commonMistake:"Saying a hacker is 'someone who destroys computers' — hackers primarily gain UNAUTHORIZED ACCESS; destruction may or may not follow."},
+
+  {id:"SA4b",section:"Section A — Essay",badge:"Q4b",
+   question:"State ONE importance of <em>add-in</em> in MS Excel",marks:"2 marks",
+   keypoints:["An add-in is an extra program that extends Excel's capabilities","Must state a specific importance/use, not just define add-in"],
+   modelAnswer:"Add-ins extend/expand the functionality of MS Excel by providing additional features and tools not available by default.\n\nExamples:\n• They enable complex data analysis (e.g. Analysis ToolPak for statistical functions)\n• They allow integration with external data sources\n• They add custom functions/formulas not in standard Excel",
+   examinerTip:"The word 'extend' or 'expand capabilities' is key to this answer. Use those words and you'll earn the marks.",
+   commonMistake:"Writing 'add-ins make Excel faster' — this is vague and likely wrong. Focus on EXTRA FEATURES/FUNCTIONALITY."},
+
+  {id:"SA4c",section:"Section A — Essay",badge:"Q4c",
+   question:"Explain the following computing terms: (i) <em>Cookies</em>  (ii) <em>Plugin</em>  (iii) <em>Web Crawlers</em>",marks:"6 marks",
+   keypoints:["Each term = 2 marks (definition + context/example)","Cookies: small files stored by browser to remember user info/preferences","Plugin: software component that adds a specific feature to an existing program","Web Crawlers: automated programs (bots) that browse the web to index pages for search engines"],
+   modelAnswer:"(i) COOKIES — Small text files stored on a user's device by a web browser when they visit a website. They are used to remember user preferences, login details, and browsing activity.\nExample: A website remembering your username so you don't retype it.\n\n(ii) PLUGIN — A software component or add-on that adds a specific feature or functionality to an existing application (especially web browsers).\nExample: Adobe Flash Player was a browser plugin for playing videos.\n\n(iii) WEB CRAWLERS — Automated programs (bots/spiders) used by search engines to systematically browse the internet, discover web pages, and index their content for search results.\nExample: Google uses web crawlers (Googlebot) to index websites.",
+   examinerTip:"For each term, give: (1) what it IS, and (2) what it DOES or an example. This ensures you hit both marks per term.",
+   commonMistake:"Saying cookies are 'viruses' or 'harmful files' — cookies are generally harmless data files. Some can be misused, but they are NOT malware."},
+
+  // SECTION B
+  {id:"SB5a",section:"Section B — Practical",badge:"Q5a",
+   question:"Identify the type of application whose interface is shown in <strong>Figure 2</strong>",marks:"2 marks",
+   keypoints:["Figure 2 shows a slide with 'Click to add title' placeholder — this is PRESENTATION software","Must name the TYPE and give an example for full marks"],
+   modelAnswer:"The interface shown in Figure 2 is a Presentation Software (also called slide-making software).\n\nExample: Microsoft PowerPoint",
+   examinerTip:"Don't just say 'PowerPoint' — say 'presentation software/application' as the TYPE, then PowerPoint as the example.",
+   commonMistake:"Saying it's a 'word processing application' — Word does not have slide interfaces with 'Click to add title' placeholders."},
+
+  {id:"SB5b",section:"Section B — Practical",badge:"Q5b",
+   question:"Outline the steps to: (i) Insert a new slide  (ii) Delete a slide — in the Figure 2 application (PowerPoint)",marks:"4 marks",
+   keypoints:["Steps must be in correct logical order","Keyboard shortcut Ctrl+M is acceptable for insert","Right-click method is expected for both operations"],
+   modelAnswer:"(i) TO INSERT A NEW SLIDE:\n1. Click on the slide panel on the left where you want the new slide\n2. Right-click and select 'New Slide'\nOR: Click the Home tab → click 'New Slide' in the Slides group\nOR: Press Ctrl + M\n\n(ii) TO DELETE A SLIDE:\n1. Click on the slide you want to delete in the slide panel\n2. Right-click on the slide\n3. Select 'Delete Slide'\nOR: Select the slide and press the Delete key on the keyboard",
+   examinerTip:"Always write steps as numbered points starting with verbs (Click, Right-click, Select). This shows the examiner a clear logical sequence.",
+   commonMistake:"Writing 'go to File and insert slide' — the Insert/Home tab is the correct location, not the File menu. File is for saving/printing/opening."},
+
+  {id:"SB5c",section:"Section B — Practical",badge:"Q5c",
+   question:"State <strong>two</strong> examples of the application shown in Figure 2",marks:"2 marks",
+   keypoints:["Must name presentation software applications","Each correct example = 1 mark"],
+   modelAnswer:"1. Microsoft PowerPoint\n2. Google Slides\n\nOther accepted answers:\n• LibreOffice Impress\n• Keynote (Apple)\n• Prezi",
+   examinerTip:"Microsoft PowerPoint is the must-know answer. Add Google Slides as your second — widely accepted and free.",
+   commonMistake:"Writing 'Microsoft Word' or 'MS Excel' — these are NOT presentation software."},
+
+  {id:"SB5di",section:"Section B — Practical",badge:"Q5d(i)",
+   question:"Give TWO uses of the application shown in Figure 2 (presentation software)",marks:"2 marks",
+   keypoints:["Must relate specifically to PRESENTATION software use cases","Each valid use = 1 mark"],
+   modelAnswer:"1. Creating and delivering slideshows/presentations for lectures, business meetings, or seminars.\n2. Designing visual aids with text, images, charts, and multimedia for teaching or public speaking.\n\nOther accepted uses:\n• Creating animated slide-based tutorials\n• Producing infographics and visual reports",
+   examinerTip:"Focus on what PRESENTATIONS are used for — teaching, business pitches, seminars. Don't give general computer uses.",
+   commonMistake:"Writing 'for typing documents' — that's MS Word. Presentation software is specifically for creating slideshows."},
+
+  {id:"SB5dii",section:"Section B — Practical",badge:"Q5d(ii)",
+   question:"Give TWO differences between <strong>transitions</strong> and <strong>animations</strong> in the presentation application",marks:"4 marks",
+   keypoints:["Transitions = effects that happen BETWEEN slides (slide-to-slide movement)","Animations = effects applied to individual OBJECTS ON a slide","Must present as clear comparison — use numbered contrasts"],
+   modelAnswer:"1. Transitions are effects applied to a WHOLE SLIDE as it moves from one slide to the next, while Animations are effects applied to individual OBJECTS (text, images, shapes) within a single slide.\n\n2. Transitions occur between slides (e.g. Fade, Wipe, Push), while Animations occur on a slide without changing the slide itself (e.g. Fly In, Spin, Bounce).",
+   examinerTip:"The key contrast word is SLIDE vs OBJECT. Transitions = whole slide changing. Animations = objects on a slide moving/appearing.",
+   commonMistake:"Saying transitions and animations are the same thing or just describing transitions as 'moving effects.' They are distinct features with distinct functions."},
+
+  {id:"SB5ei",section:"Section B — Practical",badge:"Q5e(i)",
+   question:"Highlight the steps to <strong>run a slideshow</strong> in the presentation application (Figure 2)",marks:"3 marks",
+   keypoints:["Correct steps for starting/running a slideshow in PowerPoint","From beginning: F5 OR Slide Show tab → From Beginning","From current slide: Shift+F5 OR click the slideshow icon at the bottom"],
+   modelAnswer:"Steps to run a slideshow:\n1. Open the presentation in Microsoft PowerPoint\n2. Click on the Slide Show tab on the ribbon\n3. Click 'From Beginning' to start from the first slide\n   OR press the F5 key on the keyboard\n\nTo start from the current slide:\n• Click 'From Current Slide' OR press Shift + F5",
+   examinerTip:"The examiner expects at least: Slide Show tab → From Beginning. The keyboard shortcut F5 is a bonus worth mentioning.",
+   commonMistake:"Writing 'click View → Slideshow' — the correct tab is SLIDE SHOW, not View. Know your ribbon tabs."},
+
+  {id:"SB5eii",section:"Section B — Practical",badge:"Q5e(ii)",
+   question:"Highlight the steps to <strong>print a handout of 6 slides per page</strong> in the presentation application",marks:"3 marks",
+   keypoints:["Must navigate to Print settings correctly","Must specifically select 'Handouts' layout and '6 slides per page' option","Steps must be in logical sequence"],
+   modelAnswer:"Steps to print a handout with 6 slides per page:\n1. Click on the File tab\n2. Select Print (or press Ctrl + P)\n3. Under Settings, click on the 'Full Page Slides' dropdown\n4. Under Handouts, select '6 Slides Horizontal' (or '6 Slides Vertical')\n5. Set the number of copies as required\n6. Click the Print button",
+   examinerTip:"The critical step examiners look for is steps 3–4: changing from 'Full Page Slides' to '6 Slides' under Handouts. Without that, no marks for handout selection.",
+   commonMistake:"Saying 'File → Print → print 6 pages' — this prints 6 PAGES, not 6 SLIDES on ONE page. The Handouts layout option is what changes the format."},
+
+  {id:"SB6a",section:"Section B — Practical",badge:"Q6a",
+   question:"Describe the step-by-step approach to <strong>CREATE</strong> a mail merge using a template in MS Word",marks:"5 marks",
+   keypoints:["Mail merge = merging a letter/template with a list of contacts/data source","Steps must follow the Mailings tab workflow in MS Word","Must mention: opening template, connecting to data source, inserting merge fields"],
+   modelAnswer:"Steps to CREATE a mail merge:\n1. Open Microsoft Word and open/create the template document\n2. Click on the Mailings tab on the ribbon\n3. Click 'Start Mail Merge' and select the document type (e.g. Letters)\n4. Click 'Select Recipients' → choose 'Use an Existing List'\n5. Browse and select the contacts database/file (e.g. Excel sheet or Access database)\n6. Position the cursor where you want contact details to appear in the template\n7. Click 'Insert Merge Field' and select the appropriate fields (e.g. First Name, Address)\n8. Repeat step 7 for all required fields in the template\n9. Click 'Preview Results' to review how the merged document will look",
+   examinerTip:"The examiner wants to see: Mailings tab → Start Mail Merge → Select Recipients → Insert Merge Fields. These 4 stages are the backbone of the answer.",
+   commonMistake:"Skipping the 'Insert Merge Field' step — many students describe how to connect to the data source but forget to explain how the fields actually get placed in the document."},
+
+  {id:"SB6b",section:"Section B — Practical",badge:"Q6b",
+   question:"Describe the step-by-step approach to <strong>PREVIEW AND COMPLETE</strong> a mail merge using a template in MS Word",marks:"4 marks",
+   keypoints:["Preview: use 'Preview Results' to check merged output before printing","Complete: Finish & Merge → Print Documents OR Edit Individual Documents","Must mention checking for errors before completing"],
+   modelAnswer:"Steps to PREVIEW and COMPLETE a mail merge:\n\nPREVIEW:\n1. Click 'Preview Results' in the Mailings tab to see how merged data appears\n2. Use the navigation arrows (← →) to scroll through and preview each merged record\n3. Check for any errors in the field placement or data\n\nCOMPLETE:\n4. Click 'Finish & Merge' in the Mailings tab\n5. Choose one of the following options:\n   • 'Print Documents' — sends all merged letters directly to the printer\n   • 'Edit Individual Documents' — creates a new Word file with all merged letters for review/editing before printing\n6. Confirm the selection (All records, Current record, or a range) and click OK",
+   examinerTip:"Key phrases: 'Preview Results', 'Finish & Merge', 'Print Documents' or 'Edit Individual Documents.' Use exact MS Word terminology.",
+   commonMistake:"Writing 'click print and it's done' — you must go through Finish & Merge, not just Ctrl+P. Examiners want the mail merge workflow, not generic printing steps."}
+];
+
+// ══════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════
+let objDone = new Set(JSON.parse(localStorage.getItem('dp2025_obj')||'[]'));
+let thDone  = new Set(JSON.parse(localStorage.getItem('dp2025_th') ||'[]'));
+let currentTab = 'objectives';
+let currentFilter = 'all';
+let searchTerm = '';
+
+function save(){
+  localStorage.setItem('dp2025_obj',JSON.stringify([...objDone]));
+  localStorage.setItem('dp2025_th', JSON.stringify([...thDone]));
+}
+
+// ══════════════════════════════════════════
+//  PROGRESS
+// ══════════════════════════════════════════
+function updateProgress(){
+  const totalObj = objectives.length;
+  const totalTh  = theory.length;
+  const total    = currentTab === 'objectives' ? totalObj : totalTh;
+  const doneSet  = currentTab === 'objectives' ? objDone : thDone;
+  const done     = doneSet.size;
+  const pct      = total > 0 ? Math.round((done/total)*100) : 0;
+  document.getElementById('obj-total').textContent    = totalObj;
+  document.getElementById('theory-total').textContent = totalTh;
+  document.getElementById('done-count').textContent   = objDone.size + thDone.size;
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-text').textContent = done+' / '+total;
+}
+
+// ══════════════════════════════════════════
+//  TAB SWITCHING
+// ══════════════════════════════════════════
+function switchTab(tab){
+  currentTab = tab;
+  currentFilter = 'all';
+  searchTerm = '';
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-btn')[tab==='objectives'?0:1].classList.add('active');
+  document.getElementById('tab-objectives').classList.toggle('hidden', tab!=='objectives');
+  document.getElementById('tab-theory').classList.toggle('hidden', tab!=='theory');
+  updateProgress();
+  if(tab==='objectives') renderObjectives(); else renderTheory();
+}
+
+function toggleCard(id){
+  const card = document.getElementById('card-'+id);
+  if(card) card.classList.toggle('open');
+}
+
+function toggleDoneObj(num){
+  if(objDone.has(num)) objDone.delete(num); else objDone.add(num);
+  save(); updateProgress(); renderObjectives();
+}
+
+function toggleDoneTh(id){
+  if(thDone.has(id)) thDone.delete(id); else thDone.add(id);
+  save(); updateProgress(); renderTheory();
+}
+
+// ══════════════════════════════════════════
+//  RENDER OBJECTIVES
+// ══════════════════════════════════════════
+function renderObjectives(){
+  const list = document.getElementById('obj-list');
+  const s = searchTerm;
+  const filtered = objectives.filter(q=>{
+    const match = !s || q.text.toLowerCase().includes(s)||q.topic.toLowerCase().includes(s)||
+      q.trap.toLowerCase().includes(s)||q.hint.toLowerCase().includes(s)||
+      q.analogy.toLowerCase().includes(s)||q.answerText.toLowerCase().includes(s)||String(q.num)===s;
+    const isDone = objDone.has(q.num);
+    const filt = currentFilter==='all'||(currentFilter==='done'&&isDone)||(currentFilter==='pending'&&!isDone);
+    return match&&filt;
+  });
+  document.getElementById('result-count').textContent =
+    filtered.length!==objectives.length ? `Showing ${filtered.length} of ${objectives.length} questions` : '';
+  if(!filtered.length){list.innerHTML=`<div class="empty"><h3>No questions found</h3><p>Try a different search or filter.</p></div>`;return;}
+  list.innerHTML = filtered.map(q=>{
+    const isDone = objDone.has(q.num);
+    return `<div class="q-card ${isDone?'done':''}" id="card-${q.num}">
+      <div class="q-header" onclick="toggleCard(${q.num})">
+        <div class="q-num">${q.num}</div>
+        <div class="q-text">${q.text}</div>
+        <div class="q-chevron">▼</div>
+      </div>
+      <div class="q-details">
+        <div class="topic-tag">📚 ${q.topic}</div>
+        <div class="detail-grid">
+          <div class="detail-item d-trap"><div class="detail-label">⚠️ Trap</div>${q.trap}</div>
+          <div class="detail-item d-hint"><div class="detail-label">💡 Hint</div>${q.hint}</div>
+          <div class="detail-item d-analogy"><div class="detail-label">🇳🇬 Nigerian Analogy</div>${q.analogy}</div>
+        </div>
+        <div class="answer-box">
+          <div class="answer-letter">${q.answerLetter}</div>
+          <div class="answer-text">✅ ${q.answerText}</div>
+        </div>
+        <button class="done-btn" onclick="event.stopPropagation();toggleDoneObj(${q.num})">
+          ${isDone?'✓ Mastered':'○ Mark as Mastered'}
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+// ══════════════════════════════════════════
+//  RENDER THEORY
+// ══════════════════════════════════════════
+function renderTheory(){
+  const container = document.getElementById('theory-container');
+  const s = searchTerm;
+  const filtered = theory.filter(q=>{
+    const match = !s || q.question.toLowerCase().includes(s)||q.modelAnswer.toLowerCase().includes(s)||
+      q.examinerTip.toLowerCase().includes(s)||q.commonMistake.toLowerCase().includes(s)||
+      q.section.toLowerCase().includes(s)||q.badge.toLowerCase().includes(s);
+    const isDone = thDone.has(q.id);
+    const filt = currentFilter==='all'||(currentFilter==='done'&&isDone)||(currentFilter==='pending'&&!isDone);
+    return match&&filt;
+  });
+  document.getElementById('result-count').textContent =
+    filtered.length!==theory.length ? `Showing ${filtered.length} of ${theory.length} questions` : '';
+  if(!filtered.length){container.innerHTML=`<div class="questions"><div class="empty"><h3>No questions found</h3><p>Try a different search or filter.</p></div></div>`;return;}
+
+  const sections={};
+  filtered.forEach(q=>{ if(!sections[q.section]) sections[q.section]=[]; sections[q.section].push(q); });
+
+  let html='';
+  Object.keys(sections).forEach(sec=>{
+    html+=`<div class="section-divider"><span>${sec}</span></div><div class="questions">`;
+    sections[sec].forEach(q=>{
+      const isDone=thDone.has(q.id);
+      const kpList=q.keypoints.map(k=>`<li>${k}</li>`).join('');
+      html+=`<div class="t-card ${isDone?'done':''}" id="card-${q.id}">
+        <div class="t-header" onclick="toggleCard('${q.id}')">
+          <div class="t-badge">${q.badge}</div>
+          <div class="t-question">${q.question}<span class="t-marks">${q.marks}</span></div>
+          <div class="q-chevron">▼</div>
+        </div>
+        <div class="t-details">
+          <div class="t-keypoints">
+            <div class="t-section-label">📋 Key Points to Cover</div>
+            <ul>${kpList}</ul>
+          </div>
+          <div class="t-model">
+            <div class="t-section-label">✅ Model Answer</div>
+            <div class="model-body">${q.modelAnswer}</div>
+          </div>
+          <div class="t-examiner">
+            <div class="t-section-label">🎓 Examiner's Tip</div>
+            ${q.examinerTip}
+          </div>
+          <div class="t-mistake">
+            <div class="t-section-label">⚠️ Common Mistake</div>
+            ${q.commonMistake}
+          </div>
+          <button class="done-btn" onclick="event.stopPropagation();toggleDoneTh('${q.id}')">
+            ${isDone?'✓ Mastered':'○ Mark as Mastered'}
+          </button>
+        </div>
+      </div>`;
+    });
+    html+=`</div>`;
+  });
+  container.innerHTML=html;
+}
+
+// ══════════════════════════════════════════
+//  SEARCH & FILTER
+// ══════════════════════════════════════════
+document.getElementById('search').addEventListener('input',e=>{
+  searchTerm=e.target.value.toLowerCase().trim();
+  if(currentTab==='objectives') renderObjectives(); else renderTheory();
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter=btn.dataset.filter;
+    if(currentTab==='objectives') renderObjectives(); else renderTheory();
+  });
+});
+
+// ══════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════
+updateProgress();
+renderObjectives();
+</script>
+</body>
+</html>
