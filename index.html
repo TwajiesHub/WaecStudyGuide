@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2025 Data Processing — SS3 Study Guide</title>
+<title>Data Processing — SS3 Study Guide</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -21,14 +21,22 @@
   .brand{display:flex;align-items:center;gap:.7rem;margin-bottom:.7rem;}
   .flag{display:flex;width:32px;height:21px;border-radius:3px;overflow:hidden;flex-shrink:0;box-shadow:0 2px 6px rgba(0,0,0,.4);}
   .flag span{flex:1;}.flag .g{background:#008751;}.flag .w{background:#fff;}
-  h1{font-family:'Syne',sans-serif;font-size:clamp(1.15rem,4vw,1.65rem);font-weight:800;color:#fff;line-height:1.1;}
-  h1 span{color:var(--gold);}
+  .brand-text h1{font-family:'Syne',sans-serif;font-size:clamp(1.1rem,4vw,1.55rem);font-weight:800;color:#fff;line-height:1.1;}
+  .brand-text h1 span{color:var(--gold);}
   .subtitle{font-size:.72rem;color:var(--muted);margin-top:.15rem;letter-spacing:.05em;text-transform:uppercase;}
   .stats-bar{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:.7rem;}
   .stat-pill{background:var(--surface2);border:1px solid var(--border);border-radius:50px;padding:.28rem .75rem;font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:.32rem;}
   .stat-pill strong{color:var(--text);font-weight:600;}
   .dot{width:6px;height:6px;border-radius:50%;}
   .dot-green{background:var(--green-light);}.dot-gold{background:var(--gold);}.dot-purple{background:var(--topic);}
+
+  /* YEAR TOGGLE */
+  .year-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.65rem;flex-wrap:wrap;}
+  .year-label{font-family:'Syne',sans-serif;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+  .year-btn{font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;padding:.36rem .9rem;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.03em;}
+  .year-btn.active{background:var(--gold);border-color:var(--gold);color:#000;}
+  .year-btn:hover:not(.active){border-color:var(--gold);color:var(--gold);}
+
   .tabs{display:flex;gap:.45rem;}
   .tab-btn{font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;padding:.42rem 1rem;border-radius:8px;border:1.5px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.03em;}
   .tab-btn.active{background:var(--green);border-color:var(--green);color:#fff;}
@@ -131,10 +139,15 @@
   <div class="header-inner">
     <div class="brand">
       <div class="flag"><span class="g"></span><span class="w"></span><span class="g"></span></div>
-      <div>
-        <h1>2025 Data Processing <span>SS3</span></h1>
+      <div class="brand-text">
+        <h1>Data Processing <span>SS3</span></h1>
         <div class="subtitle">WAEC Complete Study Guide</div>
       </div>
+    </div>
+    <div class="year-row">
+      <span class="year-label">Year:</span>
+      <button class="year-btn" onclick="switchYear('2024')">2024</button>
+      <button class="year-btn active" onclick="switchYear('2025')">2025</button>
     </div>
     <div class="stats-bar">
       <div class="stat-pill"><span class="dot dot-green"></span><strong id="obj-total">40</strong> Objectives</div>
@@ -142,8 +155,8 @@
       <div class="stat-pill"><span class="dot dot-gold"></span><strong id="done-count">0</strong> Mastered</div>
     </div>
     <div class="tabs">
-      <button class="tab-btn active" onclick="switchTab('objectives')">📝 Objectives (40)</button>
-      <button class="tab-btn" onclick="switchTab('theory')">✍️ Theory (18)</button>
+      <button class="tab-btn active" onclick="switchTab('objectives')" id="tab-obj-btn">📝 Objectives (40)</button>
+      <button class="tab-btn" onclick="switchTab('theory')" id="tab-th-btn">✍️ Theory</button>
     </div>
   </div>
 </header>
@@ -169,13 +182,59 @@
 <div id="tab-objectives"><div class="questions" id="obj-list"></div></div>
 <div id="tab-theory" class="hidden"><div id="theory-container"></div></div>
 
-<footer><strong>2025 WAEC Data Processing</strong> · SS3 Complete Study Aid · Nigeria 🇳🇬</footer>
+<footer><strong>WAEC Data Processing</strong> · SS3 Complete Study Aid · Nigeria 🇳🇬</footer>
 
 <script>
 // ══════════════════════════════════════════
-//  OBJECTIVES DATA
+//  2024 OBJECTIVES DATA
 // ══════════════════════════════════════════
-const objectives = [
+const objectives2024 = [
+  {num:1,text:"The Stepped Reckoner was developed by",options:["A. Gottfried Leibnitz","B. Herman Hollerith","C. John Von Neumann","D. William Schickard"],topic:"History of Computers",trap:"Students guess Babbage or Hollerith. Babbage built the Difference Engine/Analytical Engine. Hollerith invented the punch card tabulator. The Stepped Reckoner = Leibnitz.",hint:"Leibnitz built the Stepped Reckoner — an early mechanical calculator that could multiply and divide. The clue is in the name 'Reckoner' = calculating machine.",analogy:"Different inventors, different machines. Babbage = Difference Engine. Leibnitz = Stepped Reckoner. Don't mix them up — like confusing Dangote with Otedola!",answerLetter:"A",answerText:"Gottfried Leibnitz"},
+  {num:2,text:"The binary number 100101₂ can be written in denary as",options:["A. 25","B. 37","C. 45","D. 211"],topic:"Number Base Conversion",trap:"Students only count two 1s and get a small number, or lose track of place values. The binary is 6 digits — positions are 32, 16, 8, 4, 2, 1.",hint:"100101₂ = 1×32 + 0×16 + 0×8 + 1×4 + 0×2 + 1×1 = 32 + 4 + 1 = 37",analogy:"Count which positions have a '1': the 32s place, the 4s place, and the 1s place. ₦32 + ₦4 + ₦1 = ₦37. Same logic!",answerLetter:"B",answerText:"37"},
+  {num:3,text:"The first stage in computer data processing procedure is",options:["A. Collection of data","B. Communication of information","C. Conversion of data","D. Manipulation of data"],topic:"Data Processing Basics",trap:"'Manipulation' feels like it should come first — you're 'doing something' to data. But you must COLLECT data before you can manipulate it.",hint:"The data processing cycle always begins with collection. You cannot process what you have not collected.",analogy:"Before JAMB can mark your exam, they must first collect the answer booklets. No collection = no processing!",answerLetter:"A",answerText:"Collection of data"},
+  {num:4,text:"One advantage of electronic data processing is that it",options:["A. Involves special skill","B. Deals only with simple data","C. Is completely error-free","D. Handles complex data"],topic:"Electronic Data Processing",trap:"'Completely error-free' is FALSE — garbage in, garbage out (GIGO). 'Deals only with simple data' is also FALSE — EDP handles complexity.",hint:"Electronic data processing can handle complex, cumbersome tasks that would be impossible to do manually. That's the key advantage.",analogy:"Calculating the payroll for 10,000 NNPC staff manually is nearly impossible. EDP handles that complex task in seconds!",answerLetter:"D",answerText:"Handles complex data"},
+  {num:5,text:"The type of computer that has the ability of counting in discrete form is referred to as",options:["A. Analogue computer","B. Digital computer","C. Hybrid computer","D. Versatile computer"],topic:"Types of Computers",trap:"Analogue computers work with CONTINUOUS signals (like voltage). Hybrid = combination of both. Digital = discrete steps only.",hint:"Discrete = distinct, countable steps (0 and 1). Digital computers work entirely in binary = discrete form.",analogy:"An analogue clock hand moves CONTINUOUSLY. A digital clock jumps 3:05 → 3:06 in DISCRETE steps. That jumping = digital!",answerLetter:"B",answerText:"Digital computer"},
+  {num:6,text:"One reason for using Computer Aided Design (CAD) in manufacturing is that",options:["A. It uses few system resources","B. Manufacturing time is reduced","C. Designers do not need training to use it","D. 3D designs are easily produced with it"],topic:"Applications of ICT / CAD",trap:"'Uses few system resources' is FALSE — CAD is resource-intensive. 'No training needed' is FALSE. Manufacturing time reduction is indirect.",hint:"CAD's primary advantage is the ability to create, rotate, and visualise complex 3D models and simulations on screen before building anything.",analogy:"An architect who used to draw blueprints by hand can now create a full 3D rotating building model on screen. Complex designs, made easy!",answerLetter:"D",answerText:"3D designs are easily produced with it"},
+  {num:7,text:"Which one of the following statements is true about Voice Over IP (VoIP)?",options:["A. Converts voice and video data into a digital signal and transfers it over the Internet","B. Converts voice and video data into a digital signal and broadcasts it via a transmitter","C. Is a voice over communication system which is cyber-attack proof","D. Is a circuit-switched data communication system"],topic:"VoIP / Network Technology",trap:"VoIP is NOT circuit-switched (that's traditional telephone). It also doesn't BROADCAST via transmitter — it TRANSFERS over the Internet.",hint:"VoIP = Voice Over Internet Protocol. Digital signal + Internet transfer = WhatsApp calls, Zoom calls, Google Meet.",analogy:"Old phone calls used dedicated circuits (like a private road). VoIP breaks voice into digital packets and sends them over the shared Internet highway!",answerLetter:"A",answerText:"Converts voice and video data into a digital signal and transfers it over the Internet"},
+  {num:8,text:"Which one of the following sets of devices can be used to store data during processing?",options:["A. Cache, RAM and Register","B. Cache, Register and ROM","C. Flash Drive, ROM and Hard Disk","D. RAM, Register and Zip Drive"],topic:"Primary Memory / Storage",trap:"ROM is read-only and not used for temporary storage during processing. Flash drive, Zip drive and Hard disk are secondary/permanent storage.",hint:"During processing, the CPU uses: Registers (internal CPU storage) + Cache (fast buffer) + RAM (main working memory). All three are primary storage.",analogy:"While cooking: what you're holding in your hands (Register) + what's on the counter next to you (Cache) + what's in the bowl in front of you (RAM). Not the fridge (hard disk)!",answerLetter:"A",answerText:"Cache, RAM and Register"},
+  {num:9,text:"The process of inspecting, transforming and modeling data to get useful information is known as",options:["A. Collation","B. Interpretation","C. Execution","D. Analysis"],topic:"Data Processing Terms",trap:"Collation = arranging/ordering data. Interpretation = explaining meaning. Execution = running a program. Only analysis covers inspecting, transforming AND modelling.",hint:"Data Analysis = the full process of examining data through inspection, transformation, and modelling to discover useful patterns and information.",analogy:"After WAEC marks scripts, statisticians inspect the scores, transform them into grades, and model pass rates. That complete process = analysis!",answerLetter:"D",answerText:"Analysis"},
+  {num:10,text:"One disadvantage of using computer for information processing is",options:["A. Need for staff retraining","B. Increased running cost in the long run","C. The increase in storage space","D. Redundancy of computers in the long run"],topic:"Disadvantages of Computers",trap:"Option A (staff retraining) is also a cost but it's a one-time transition cost. Option B is an ONGOING disadvantage — maintenance, power, upgrades never stop.",hint:"Computers require continuous maintenance, software updates, hardware upgrades and repairs — leading to increased running costs over time.",analogy:"A generator is cheaper to buy than to fuel and service for years. Same with computers — the ongoing electricity and maintenance bills add up!",answerLetter:"B",answerText:"Increased running cost in the long run"},
+  {num:11,text:"The diagram in Figure 1 illustrates a process called",options:["A. Information processing","B. Information transmission","C. Modulation","D. Synchronization"],topic:"Communication Systems",trap:"Figure 1 shows a transmitter sending a signal to a receiver — this is a TRANSMISSION diagram, not a processing diagram. Don't confuse the two!",hint:"The diagram shows: Information Source → Transmitter → Channel → Receiver. That one-way signal flow = information transmission.",analogy:"When NTA broadcasts news from their studio to your TV at home, that's transmission — sending a signal from one point to another!",answerLetter:"B",answerText:"Information transmission"},
+  {num:12,text:"The transmitter in communication is the component that",options:["A. Decodes sender's signal by interpretation","B. Encodes interpreted data by using machine language","C. Broadcasts synchronous signals","D. Launches signal into the air"],topic:"Communication Components",trap:"Decoding and interpreting are functions of the RECEIVER, not the transmitter. The transmitter's job is to SEND the signal out.",hint:"The transmitter takes the message and launches/sends the signal into the transmission medium (air, cable, fibre) so the receiver can pick it up.",analogy:"A radio station TRANSMITS by sending radio waves into the air. Your radio (receiver) picks them up. The station = transmitter that launches signal!",answerLetter:"D",answerText:"Launches signal into the air"},
+  {num:13,text:"Which of the following resources is NOT usually shared in a network?",options:["A. VGA projector","B. Laserjet printer","C. Folder","D. File"],topic:"Network Resource Sharing",trap:"Folders, files, and printers ARE commonly shared over a network. VGA is a direct cable connection — it can't be networked.",hint:"Network-shared resources include printers, files, folders and internet connections. A VGA projector requires a physical cable directly from ONE computer.",analogy:"An office printer is shared over WiFi. Files and folders are shared on Google Drive. But your VGA cable to a projector plugs into ONE laptop only — not shared!",answerLetter:"A",answerText:"VGA projector"},
+  {num:14,text:"Factors to be considered when creating a backup system in a computer network include",options:["A. Amount of RAM, amount of data and time of backup","B. Amount of RAM, type of data and frequency of backup","C. Media to use, amount of data and frequency of backup","D. Media to use, type of data and time of backup"],topic:"Backup Systems",trap:"Amount of RAM is irrelevant to backup planning — RAM is temporary working memory, not storage. 'Type of data' appears in B and D but the solution specifies C.",hint:"Backup planning covers: (1) what MEDIA to use, (2) how much DATA to back up, (3) how often = FREQUENCY. The media, data volume and frequency directly determine reliability.",analogy:"Plan to back up school work: use Google Drive (media) + back up all 500 files (amount of data) + every Friday (frequency). RAM doesn't matter here!",answerLetter:"C",answerText:"Media to use, amount of data and frequency of backup"},
+  {num:15,text:"The URL www.exams.edu.ng represents the website of",options:["A. An examination body","B. A Nigerian-based learning institution","C. An educational institution in Niger","D. A research institution in Niger"],topic:"Internet / URLs",trap:"'.edu.ng' might suggest a school (learning institution) but 'exams' in the URL points specifically to an EXAMINATION body, not a teaching institution.",hint:"'exams' = examinations. '.edu.ng' = education, Nigeria. The combination points to a body that conducts exams in Nigeria — like WAEC or NECO.",analogy:"www.waec.org.ng is the website of an examination body. www.exams.edu.ng follows the same logic — it's for conducting exams, not teaching classes!",answerLetter:"A",answerText:"An examination body"},
+  {num:16,text:"The Post Office Protocol (POP) is used to",options:["A. Interconnect devices on the Internet","B. Retrieve email from a mail server","C. Transfer file from a server to a client","D. Send email from one user to another"],topic:"Internet Protocols / Email",trap:"Sending email = SMTP. Transferring files = FTP. Interconnecting devices = routers/switches. POP is specifically for RETRIEVING (downloading) email.",hint:"POP = Post Office Protocol. You go to the post office to COLLECT your mail. POP downloads your email from the server to your device.",analogy:"POP is like picking up your letter from the post office. SMTP is like posting a letter. FTP is like sending a package. POP = collecting only!",answerLetter:"B",answerText:"Retrieve email from a mail server"},
+  {num:17,text:"A user working on Windows 7 issued the command Ctrl + Alt + Del while typing a document. What interface is expected to be displayed?",options:["A. Restart Windows","B. Shut Down Windows","C. Windows Security","D. Windows Task Manager"],topic:"Operating System / Windows",trap:"In older Windows (XP), Ctrl+Alt+Del went straight to Task Manager. In Windows 7, it opens the Windows Security screen FIRST, giving you a menu of options.",hint:"Windows 7 Ctrl+Alt+Del → Windows Security screen → options: Lock, Switch User, Sign Out, Change Password, Task Manager.",analogy:"It's like a security checkpoint that gives you a MENU. You don't go straight to Task Manager — you first go through the security options screen!",answerLetter:"C",answerText:"Windows Security"},
+  {num:18,text:"Header and Footer are added to a document in MS Word by just clicking on the",options:["A. Edit menu","B. Format menu","C. Insert menu","D. View menu"],topic:"MS Word Features",trap:"Students pick View (where Header/Footer was in older Word versions) or Format. In current MS Word versions, it's under the INSERT tab.",hint:"Insert tab → Header & Footer group. This is where you INSERT new elements into the document, including headers and footers.",analogy:"On your phone, you ADD a caption to a photo in the 'Insert' or 'Add' section — not in 'Format' or 'View.' Same logic in MS Word!",answerLetter:"C",answerText:"Insert menu"},
+  {num:19,text:"A typist positioned the insertion point at the beginning of a line in a word processor and then pressed the Shift key and clicked at the opposite end of the text. What would be the result?",options:["A. The text will be copied into the clipboard","B. The text will be cut into the clipboard","C. The text will be deleted from storage","D. The text will be highlighted on the screen"],topic:"MS Word / Text Selection",trap:"Shift+click SELECTS text — it doesn't copy, cut or delete. Copying requires Ctrl+C AFTER selection. The immediate result is just highlighting.",hint:"Shift + Click = select everything from cursor position to where you click. The selected text becomes highlighted (blue). Nothing else happens yet.",analogy:"Using a highlighter pen on paper — you're marking text in yellow. It's not cut out, not copied, just HIGHLIGHTED/SELECTED. Same effect!",answerLetter:"D",answerText:"The text will be highlighted on the screen"},
+  {num:20,text:"The Microsoft Excel menu bar icon shown in Figure 2 is used to",options:["A. Automatically add top selected values","B. Create label that spans multiple columns","C. Spot trends and patterns in user's data using bars, columns and icons","D. Organize data for easy analysis"],topic:"MS Excel Features",trap:"Figure 2 shows the sort and filter icon (funnel/A-Z). Students confuse it with AutoSum (Σ) or merge cells. Look at the icon shape carefully.",hint:"The funnel icon (or A-Z icon) = Sort and Filter. It organizes and filters data to make analysis easier.",analogy:"Like sorting students by score from highest to lowest — that organization helps you find patterns quickly. The sort/filter icon does exactly this!",answerLetter:"D",answerText:"Organize data for easy analysis"},
+  {num:21,text:"To add a new column to the right of the IGR column on the interface in Figure 3, the user would",options:["A. Right-click on cell C1 and then click on insert","B. Right-click on cell D1 and then click on insert","C. Right-click on column C and then click on insert","D. Right-click on column D and then click on insert"],topic:"MS Excel Column Operations",trap:"Insert always creates a new column to the LEFT of where you right-click. So to add a column to the RIGHT of IGR (column C), you must right-click column D.",hint:"New column inserts to the LEFT of the selected column. IGR is in column C. Right-click column D → insert pushes D right and places new column between C and D.",analogy:"If you're 3rd in a queue and want someone to stand after you (to your right), they stand at position 4. Tell person at position 4 (column D) to move — then insert!",answerLetter:"D",answerText:"Right-click on column D and then click on insert"},
+  {num:22,text:"The function of the foreign key in a database is to",options:["A. Uniquely identify tuples in a table","B. Provide a link between data in two tables","C. Uniquely identify an entity occurrence","D. Uniquely identify each record in a table"],topic:"Database Relationships",trap:"Options A, C, and D all describe PRIMARY key functions — uniquely identifying records/tuples. The foreign key's job is to LINK tables, not identify records.",hint:"Foreign key = a field in one table that references the primary key in another table. It creates the RELATIONSHIP (link) between two tables.",analogy:"Your student ID appears in both the 'Students' table and the 'Exam Results' table. In the Exam Results table, it's a foreign key — it links your result to your student record!",answerLetter:"B",answerText:"Provide a link between data in two tables"},
+  {num:23,text:"How many primary keys exist in Figure 4?",options:["A. 3","B. 4","C. 5","D. 12"],topic:"Database / Primary Keys",trap:"Students count ALL fields in Figure 4 (which has many fields) and get a large number. Only count the fields specifically marked as primary keys.",hint:"Figure 4 shows 3 tables: Customers (CustomerId), Orders (OrderId) and Products (ProductId). Each table has ONE primary key = 3 total.",analogy:"Three classrooms, each with one register book. The admission number in each register = one primary key per table. 3 tables = 3 primary keys!",answerLetter:"A",answerText:"3"},
+  {num:24,text:"Which of the following lists contains the primary keys in Figure 4?",options:["A. Customers, Orders and Products","B. CustomerId, OrderId and ProductId","C. CustomerId, FirstName, LastName and DateCreated","D. Customers, DateCreated, FirstName, LastName and DateCreated"],topic:"Database Design",trap:"Option A lists the TABLE NAMES, not the key FIELDS. Option C includes non-key fields (FirstName, LastName, DateCreated) that are not primary keys.",hint:"Primary keys are the unique ID fields in each table: CustomerId (in Customers), OrderId (in Orders), ProductId (in Products).",analogy:"In a school database, the primary keys would be AdmissionNo (not StudentName or DateOfBirth). The ID field, not the name fields, is the key!",answerLetter:"B",answerText:"CustomerId, OrderId and ProductId"},
+  {num:25,text:"Web design packages include the following except",options:["A. Macromedia Dreamweaver","B. iWeb","C. Front Page","D. Adobe PageMaker"],topic:"Application Software / Web Design",trap:"Macromedia Dreamweaver, iWeb, and Adobe PageMaker are all web design tools. 'Front Page' in this context refers to the front/home page of a website — not a software package.",hint:"The WAEC answer treats 'Front Page' as the front/landing page of a website, not a software application. The other three ARE web design packages.",analogy:"'Front page' is like saying 'Chapter 1' of a book — it describes a page of a website, not the tool used to build it. The others (Dreamweaver, iWeb, PageMaker) are actual software!",answerLetter:"C",answerText:"Front Page"},
+  {num:26,text:"The part labelled IV in Figure 5 (toolbox) is used to",options:["A. Shape objects","B. Select and transform objects","C. Draw lines and curves","D. Create texts"],topic:"CorelDraw / Graphics Software",trap:"Students pick B (select and transform) thinking IV is the Pick/Selection tool. But the curve tool (used to draw lines and curves) is labelled IV here.",hint:"Part IV = the Curve Tool in CorelDraw. It draws smooth curves, lines and shapes freehand.",analogy:"Like using a pen to draw a curved road on a map. The curve tool lets you draw flowing lines and curves — not just straight ones!",answerLetter:"C",answerText:"Draw lines and curves"},
+  {num:27,text:"One precautionary measure taken when cleaning a monitor is",options:["A. Covering the monitor with antiglare","B. Cleaning the monitor with alcohol","C. Unplugging the power supply cable","D. Using a vacuum cleaner to dust the monitor casing"],topic:"Computer Maintenance / Safety",trap:"Alcohol can damage screen coatings. Vacuum cleaners can create static. Antiglare covers are used during USE, not cleaning. Safety first = cut the power!",hint:"For ANY electronic device — always UNPLUG before cleaning. This prevents electric shock and avoids short circuits from cleaning fluids.",analogy:"Before you wipe your phone screen with a damp cloth, you probably lock it or turn it off. For a monitor — always unplug it first!",answerLetter:"C",answerText:"Unplugging the power supply cable"},
+  {num:28,text:"Which one of the following practices is considered ethical?",options:["A. Gaining access to school database to change one's grades","B. Gaining access into government database to alter personal details","C. Logging into a friend's social media account to read inbox messages","D. Signing into school e-library to read e-books"],topic:"Computer Ethics",trap:"Options A, B and C all involve UNAUTHORIZED access — to change grades, alter records, or read private messages. All are unethical. Only D is legitimate use.",hint:"Ethical = acting with permission and good intent. Signing into the school e-library with your own account to read books = authorized, legitimate use.",analogy:"Borrowing a library book = ethical. Breaking into the library at night to steal books = not ethical. Option D is the authorized, proper use!",answerLetter:"D",answerText:"Signing into school e-library to read e-books"},
+  {num:29,text:"Proper network implementation and good ICT policies are types of",options:["A. Adaptive measures","B. Corrective measures","C. Perfective measures","D. Preventive measures"],topic:"ICT Maintenance Types",trap:"Corrective = fixing after a problem. Adaptive = modifying for new environment. Perfective = improving performance. Preventive = stopping problems BEFORE they occur.",hint:"Proper network setup and good ICT policies aim to PREVENT security incidents and problems from happening in the first place.",analogy:"Installing burglar-proof windows and CCTV BEFORE a robbery happens = preventive. Fixing the broken window AFTER the robbery = corrective!",answerLetter:"D",answerText:"Preventive measures"},
+  {num:30,text:"Preventive maintenance measures in the computer room include the following options except",options:["A. Good ventilation","B. Proper illumination","C. The use of rugs","D. The use of tiles"],topic:"Computer Room Maintenance",trap:"Students think rugs are fine for comfort. Rugs generate static electricity (which damages components), trap moisture and cause poor heat dissipation.",hint:"Rugs in a computer room = bad. They produce static electricity, trap dust and moisture. Tiles are acceptable flooring. The exception is rugs.",analogy:"Static electricity from rugs can ZAP sensitive computer chips like a miniature lightning bolt. Hospitals ban rugs in operating theatres for similar reasons — safety!",answerLetter:"C",answerText:"The use of rugs"},
+  {num:31,text:"Measures taken to avoid eye strain include the following except",options:["A. Adjusting the brightness of the monitor","B. Adjusting the height of the screen","C. Blinking of eyes often","D. Relaxing the body regularly"],topic:"Ergonomics / Eye Care",trap:"Options A, B, C are all genuine eye strain prevention measures. Option D (relaxing the body) is good for general health but is NOT specifically a measure for eye strain.",hint:"Eye strain prevention = what you do FOR YOUR EYES: adjust brightness, position screen at eye level, blink regularly, take 20-20-20 breaks. Body relaxation is general wellness, not eye-specific.",analogy:"To avoid toothache: brush teeth, use fluoride toothpaste, visit dentist. 'Exercise regularly' is good health advice but NOT a toothache prevention measure. Same logic here!",answerLetter:"D",answerText:"Relaxing the body regularly"},
+  {num:32,text:"A database administrator is responsible for the following tasks except",options:["A. Controlling and monitoring user access to the database","B. Enrolling users and maintaining system security","C. Maintaining archived data","D. Maintaining connection between local network and the Internet"],topic:"Database Administration",trap:"Options A, B, C are all DBA duties. Maintaining the network connection between LAN and Internet = Network Administrator's job, not DBA.",hint:"DBA = manages the DATABASE: users, security, backups, archived data. Network connections between LAN and Internet = Network Admin's responsibility.",analogy:"A bank manager handles who can access the vault (DBA). But fixing the bank's internet connection? That's the IT/network team's job!",answerLetter:"D",answerText:"Maintaining connection between local network and the Internet"},
+  {num:33,text:"A computer virus replicates itself into other programs or certain areas on the disk during the",options:["A. Dormant phase","B. Execution phase","C. Propagation phase","D. Trigger phase"],topic:"Computer Viruses / Phases",trap:"Dormant = virus is hiding/waiting. Execution = virus carries out its damage. Trigger = the event that wakes the virus. PROPAGATION = virus COPIES itself.",hint:"Propagation means SPREADING/REPLICATING. The virus copies itself into other files and programs during this phase.",analogy:"A dormant thief hides in the house. The trigger is the alarm switching off. PROPAGATION is when the thief calls his friends to join — copies of the thief appear!",answerLetter:"C",answerText:"Propagation phase"},
+  {num:34,text:"A malware that copies and replicates itself using computer network and security flaws is",options:["A. Rootkit virus","B. Spyware","C. Trojan horse","D. Worm"],topic:"Types of Malware",trap:"Trojan horse disguises itself as legitimate software but does NOT self-replicate. Spyware monitors you silently. Rootkit hides in the system. Only WORM self-replicates via network.",hint:"A WORM spreads by copying itself across a network using security vulnerabilities. No human action needed — it travels and replicates automatically.",analogy:"A worm in an apple tunnels through the whole fruit on its own. A computer worm tunnels through a network, copying itself from one computer to the next automatically!",answerLetter:"D",answerText:"Worm"},
+  {num:35,text:"The entities in Figure 6 are named",options:["A. RegNo, Name and Age","B. Musa, Uche and Bayo","C. Student and Subject","D. Maths, Eng and DP"],topic:"Database Entities",trap:"Students pick A (field names) or B (data values/records). Entities are the TABLES/OBJECTS being represented, not the field names or the actual data.",hint:"In a database, an ENTITY is a real-world object or concept represented by a table. Figure 6 shows two related tables: Student and Subject.",analogy:"In a school database, 'Student' and 'Subject' are entities (things we store data ABOUT). 'Musa' and 'Mathematics' are just DATA stored inside those entities.",answerLetter:"C",answerText:"Student and Subject"},
+  {num:36,text:"Which one of the following statements is true about database tables?",options:["A. All the tables in a database have a common name","B. A table may contain repeating groups","C. Entries in a column are from different domains based on datatype","D. There are no duplicate rows in a table"],topic:"Database Tables",trap:"Option A is clearly false — tables have different names. Option B contradicts normalisation rules (repeating groups violate 1NF). Option D sounds right but C is the WAEC answer.",hint:"According to the WAEC solution, option C is correct: entries in different columns of a table come from different domains based on their respective data types.",analogy:"In a student table: the 'Name' column has text-domain values, the 'Age' column has numeric-domain values. Different columns = different data types/domains!",answerLetter:"C",answerText:"Entries in a column are from different domains based on datatype"},
+  {num:37,text:"The major difference between serial and sequential files is that sequential files are",options:["A. Given a key","B. Sorted in a particular order","C. Stored as they come","D. Recorded in any storage medium"],topic:"File Organisation",trap:"Option C (stored as they come) describes SERIAL files — no order. Sequential files are stored AND sorted. The key difference is the SORTING.",hint:"Serial = records stored in the order they arrive (no sorting). Sequential = records stored and SORTED in a particular order (usually by key).",analogy:"Serial = throwing clothes randomly into a wardrobe. Sequential = hanging them sorted by colour or type. Both are stored, but sequential is ORDERED!",answerLetter:"B",answerText:"Sorted in a particular order"},
+  {num:38,text:"Which one of the following pairs contains computer file classification?",options:["A. Master file and Serial file","B. Random file and Master file","C. Reference file and Random file","D. Transaction file and Master file"],topic:"File Classification",trap:"The key distinction is between file TYPES by PURPOSE (Master vs Transaction) versus file ACCESS methods (Serial, Random, Sequential). The correct classification PAIR is by purpose.",hint:"Master file (permanent, main records) and Transaction file (temporary, used to update master) = a classic complementary pair of file types by purpose.",analogy:"Your school's permanent student record = Master file. The daily attendance sheet used to update it = Transaction file. They work together as a pair!",answerLetter:"D",answerText:"Transaction file and Master file"},
+  {num:39,text:"Which of the following statements support the goals of data backup? I. Need for duplication  II. Need for future reference  III. Protection against data loss",options:["A. I and II only","B. I and III only","C. II and III only","D. I, II and III"],topic:"Data Backup",trap:"Statement I (need for duplication) sounds like it supports backup. But duplication is a MEANS to achieve backup, not a GOAL of backup. The goals are: future reference and data loss protection.",hint:"Data backup goals = (II) preserving data for future reference + (III) protecting against data loss. Duplication is HOW you back up, not WHY.",analogy:"WHY do you photocopy your WAEC result? To have it in future (II) and in case the original gets lost (III). The act of photocopying = duplication (I) = just the method!",answerLetter:"C",answerText:"II and III only"},
+  {num:40,text:"Which of the following characteristics is associated with the architecture of parallel database?",options:["A. Communication cost and problems cannot be ignored","B. Machines can be far from each other","C. Machines are physically close to each other","D. It is usually associated with shared-nothing architecture"],topic:"Parallel Databases",trap:"Options A, B, C may describe some aspects but the KEY identifying characteristic of parallel database architecture is the shared-nothing model.",hint:"Parallel databases use the Shared-Nothing Architecture — each node/machine has its own CPU, memory and disk. No sharing between nodes.",analogy:"Each branch office manages its own computer, files and staff independently — they don't share servers. That independence = shared-nothing architecture!",answerLetter:"D",answerText:"It is usually associated with shared-nothing architecture"},
+];
+
+// ══════════════════════════════════════════
+//  2025 OBJECTIVES DATA
+// ══════════════════════════════════════════
+const objectives2025 = [
   {num:1,text:"The <em>Difference Engine</em> was developed by?",topic:"History of Computers",trap:"Students confuse Blaise Pascal (invented the Pascaline calculator) with Charles Babbage. Both are 'fathers' of something — but different things.",hint:"'Difference' → think Babbage. Pascal made a simple calculator; Babbage made the complex engine.",analogy:"It's like confusing Dangote (built refineries) with Otedola (fuel/oil business). Both are big names, but different inventions!",answerLetter:"B",answerText:"Charles Babbage"},
   {num:2,text:"Convert A0B₁₆ to binary",topic:"Number Base Conversion",trap:"Students try hex→decimal→binary (long route) and make errors. Also mixing up A=10, B=11.",hint:"Convert each hex digit directly to 4-bit binary: A=1010, 0=0000, B=1011 → 101000001011",analogy:"Translating Yoruba → Igbo via English wastes time. Skip the middle man — translate each word directly!",answerLetter:"C",answerText:"101000001011₂"},
   {num:3,text:"Audio data are produced from?",topic:"Types of Data / Multimedia",trap:"Students pick 'graphics' thinking audio and visuals go together, or 'pictures' because phones produce both.",hint:"Audio = Sound. The question tells you — audio is what you hear.",analogy:"When you record a voice note on WhatsApp, what comes out? Sound! Not a picture.",answerLetter:"D",answerText:"Sounds"},
@@ -219,200 +278,248 @@ const objectives = [
 ];
 
 // ══════════════════════════════════════════
-//  THEORY DATA
+//  2024 THEORY DATA
 // ══════════════════════════════════════════
-const theory = [
-  // SECTION A
-  {id:"SA1ai",section:"Section A — Essay",badge:"Q1a(i)",
-   question:"<strong>Explain the term:</strong> Data Processing",marks:"2 marks",
-   keypoints:["Define what data processing IS — not just 'using a computer'","Mention: raw data collected → manipulated/transformed → meaningful output/information","Key contrast: 'raw facts (data)' → 'meaningful information'"],
-   modelAnswer:"Data processing is a series of operations/actions carried out to collect, organise, manipulate, and convert raw facts (data) into meaningful information.\n\nOR: Data processing is the manipulation of raw data by a computer or other device to produce useful and meaningful information.",
-   examinerTip:"Examiners want to see 'raw data' and 'meaningful information/output' — that contrast is the core. Don't just write 'processing data on a computer.'",
-   commonMistake:"Writing only 'the use of a computer to process data' — too vague, earns no marks. You must show the INPUT → PROCESS → OUTPUT concept."},
+const theory2024 = [
 
-  {id:"SA1aii",section:"Section A — Essay",badge:"Q1a(ii)",
-   question:"<strong>Explain the term:</strong> Data Collation",marks:"2 marks",
-   keypoints:["Must convey: gathering data from multiple sources","Must mention: arranging/organising into a structured/usable format","Must include the purpose: for input into the computer or further processing"],
-   modelAnswer:"Data collation is the systematic arrangement/gathering of data collected from different sources into a structured and usable format in preparation for input into the computer.\n\nOR: It is the process of gathering and arranging data from various sources into a machine-readable form.",
-   examinerTip:"Two key ideas must appear: (1) gathering from different sources, and (2) arranging/organising for use. Miss either and you lose marks.",
-   commonMistake:"Confusing data collation with data collection. Collection = just gathering; collation = gathering AND systematically organising."},
+  // ── Q1 ──────────────────────────────────
+  {id:"24_Q1a",section:"Q1 — Internet & Maintenance",badge:"Q1(a)",
+   question:"State <strong>four benefits of the Internet in Education</strong>",marks:"4 marks",
+   keypoints:["Must state FOUR distinct benefits","Each benefit = 1 mark","Benefits must specifically relate to EDUCATION, not general internet use","Common accepted answers: collaboration, research, e-learning, communication, virtual lab, personalised learning"],
+   modelAnswer:"1. It provides opportunities for collaboration between teachers, students and schools.\n2. It is employed for carrying out research.\n3. It supports virtual laboratory / virtual learning environments.\n4. It is used for communication between teachers and students.\n\nOther accepted benefits:\n• It provides opportunity for continuous/distance education\n• It supports personalised learning for students\n• It provides access to a wide range of educational resources online\n• It enables real-time feedback and online assessments",
+   examinerTip:"Four distinct points, four marks. Write each as a clear sentence. The examiner ticks each point separately — layout as a numbered list.",
+   commonMistake:"Writing general internet benefits like 'you can shop online' — these are NOT educational benefits. Stay focused on learning and teaching."},
 
-  {id:"SA1b",section:"Section A — Essay",badge:"Q1b",
-   question:"<strong>Describe the Data Processing Cycle</strong>",marks:"4 marks",
-   keypoints:["Must name ALL stages in the correct order","Required stages: Input → Processing → Output → Storage","Feedback is optional but earns a bonus","Brief description of each stage is ideal for full marks"],
-   modelAnswer:"The Data Processing Cycle is the sequence of stages involved in processing data from input to output and storage. It consists of:\n\n1. INPUT — Raw data is collected and entered into the computer system.\n2. PROCESSING — The data is manipulated, sorted, calculated or transformed.\n3. OUTPUT — Processed data (information) is presented to the user (e.g. on screen or printed).\n4. STORAGE — The information is saved for future use.\n(5. FEEDBACK — Output is returned to the input stage to improve the process — optional.)",
-   examinerTip:"Always write the stages as a numbered list or clearly labelled points. Writing them in a paragraph without labels risks the examiner missing them.",
-   commonMistake:"Forgetting STORAGE as a stage — most students write only Input, Processing, Output. The cycle is incomplete without storage."},
+  {id:"24_Q1b",section:"Q1 — Internet & Maintenance",badge:"Q1(b)",
+   question:"Explain the following types of maintenance in computing: (i) corrective &nbsp; (ii) adaptive &nbsp; (iii) preventive",marks:"6 marks",
+   keypoints:["2 marks per type","Each type needs a clear definition","Use key distinguishing words: FAULT (corrective), ENVIRONMENT (adaptive), AVOID BREAKDOWN (preventive)","Examples help but are not compulsory"],
+   modelAnswer:"(i) CORRECTIVE MAINTENANCE — A task performed to identify, isolate and rectify a fault so that the failed equipment or system can be restored to an operational condition.\nOR: Any maintenance performed to return equipment or a system to its proper working condition.\nExample: Replacing a faulty hard drive or fixing a software bug.\n\n(ii) ADAPTIVE MAINTENANCE — The modification of an existing system to meet/suit a new or changing environment or technological development.\nExample: Updating software to run on a new operating system like Windows 11.\n\n(iii) PREVENTIVE MAINTENANCE — A form of maintenance that is regularly performed on a system to avoid breakdown or failure.\nOR: Maintenance performed while the equipment is still working so that it does not break down unexpectedly.\nExample: Regular cleaning of computers, updating antivirus definitions.",
+   examinerTip:"The examiner looks for the KEY WORD in each definition: Corrective = 'restore/rectify a fault'; Adaptive = 'new environment/changing conditions'; Preventive = 'avoid/prevent breakdown.' Miss the keyword, lose the mark.",
+   commonMistake:"Confusing corrective and adaptive. Corrective = something BROKE and you fix it. Adaptive = nothing broke but the environment CHANGED (new OS, new law, new hardware)."},
 
-  {id:"SA1c",section:"Section A — Essay",badge:"Q1c",
-   question:"State <strong>four</strong> benefits of the computer as a tool for processing data",marks:"4 marks",
-   keypoints:["Must state FOUR clear, distinct benefits","Each benefit = 1 mark","Benefits must relate to data PROCESSING specifically","Avoid vague answers like 'it is good' or 'it is useful'"],
-   modelAnswer:"1. High Speed — Computers process data at very high speed compared to manual methods.\n2. Accuracy — Computers produce highly accurate results, reducing human error.\n3. Large Storage Capacity — Computers can store and retrieve huge volumes of data.\n4. Consistency/Reliability — Computers handle repetitive processing tasks without fatigue.\n\nOther acceptable answers:\n• Cost-effective over time\n• Fast data retrieval\n• Ability to handle large volume of data simultaneously\n• Improved reliability of output",
-   examinerTip:"Write them as a numbered list. Examiners mark point by point — a clear list makes it easy for them to award your marks.",
-   commonMistake:"Writing general computer benefits (like 'it can browse the internet') instead of data PROCESSING benefits. Stay on topic."},
+  // ── Q2 ──────────────────────────────────
+  {id:"24_Q2ai",section:"Q2 — File Organisation & Safety",badge:"Q2(a)(i)",
+   question:"<strong>Define the term File Organisation</strong>",marks:"2 marks",
+   keypoints:["Must define what file organisation IS","Key phrase: logical arrangement of data/records","Must include reference to storage and/or access/retrieval"],
+   modelAnswer:"File organisation is the logical arrangement of data/records in a file.\n\nOR: File organisation refers to the systematic method and structure used to store, manage, and retrieve data in files within a computer system.\n\nOR: File organisation encompasses how files are arranged on storage devices and how the data within these files is formatted and accessed.",
+   examinerTip:"'Logical arrangement of data/records in a file' is the concise WAEC-style answer. Two marks — definition + storage/access reference.",
+   commonMistake:"Writing 'file organisation is the way files are organized' — this is circular and earns no marks. Explain WHAT the arrangement involves and WHY (for storage/retrieval)."},
 
-  {id:"SA2a",section:"Section A — Essay",badge:"Q2a",
-   question:"Identify the parts labelled <strong>A, B, C and D</strong> in Figure 1 (computer setup diagram)",marks:"4 marks",
-   keypoints:["Must correctly match each label to the correct device","Each correct identification = 1 mark","A=Monitor, B=Printer, C=Mouse, D=Keyboard"],
-   modelAnswer:"A — Monitor (Visual Display Unit / VDU)\nB — Printer\nC — Mouse\nD — Keyboard",
-   examinerTip:"If unsure about a label, use elimination. A computer setup always has these 4 components — match visible shapes to device names.",
-   commonMistake:"Calling the system unit a 'CPU' alone may lose marks — write 'System Unit' to be safe. CPU is just one component inside the system unit."},
+  {id:"24_Q2aii",section:"Q2 — File Organisation & Safety",badge:"Q2(a)(ii)",
+   question:"Group the following file organisation attributes under <strong>Sequential</strong> or <strong>Indexed</strong> organisation:<br>I. It does not support the use of tapes.<br>II. Records are inserted one after the other.<br>III. It does not generate random keys to identify location.<br>IV. It generates random key to identify location.",marks:"4 marks",
+   keypoints:["Must match each attribute to the correct file organisation type","Sequential: II and III","Indexed: I and IV","Each correct placement = 1 mark"],
+   modelAnswer:"SEQUENTIAL FILE ORGANISATION:\n• II — Records are inserted one after the other.\n• III — It does not generate random keys to identify location.\n\nINDEXED FILE ORGANISATION:\n• I — It does not support the use of tapes.\n• IV — It generates random key to identify location.\n\nMemory tip: Sequential = ordered but no random keys (like a queue — first in, first out). Indexed = uses random/index keys to jump to records directly (like a textbook index).",
+   examinerTip:"Sequential = stored in order, one after another, no random access. Indexed = uses keys to jump directly to records. Match accordingly.",
+   commonMistake:"Swapping II and IV — students mix up which type uses random keys. INDEXED uses random/index keys; SEQUENTIAL does not."},
 
-  {id:"SA2b",section:"Section A — Essay",badge:"Q2b",
-   question:"For each device (A, B, C, D), indicate whether it is an <strong>Input</strong> or <strong>Output</strong> device",marks:"4 marks",
-   keypoints:["Input = sends data INTO the computer","Output = receives processed data FROM the computer","A (Monitor)=Output, B (Printer)=Output, C (Mouse)=Input, D (Keyboard)=Input"],
-   modelAnswer:"Device A — Monitor: OUTPUT device\nDevice B — Printer: OUTPUT device\nDevice C — Mouse: INPUT device\nDevice D — Keyboard: INPUT device",
-   examinerTip:"Ask yourself: does this device send information TO the computer, or receive information FROM the computer? That determines input/output.",
-   commonMistake:"Students say the monitor is both input and output — a standard monitor is OUTPUT only. Touchscreens are both input and output."},
+  {id:"24_Q2bi",section:"Q2 — File Organisation & Safety",badge:"Q2(b)(i)",
+   question:"State <strong>two safety rules</strong> observed in a computer laboratory",marks:"2 marks",
+   keypoints:["Must state TWO specific, practical safety rules","Each valid rule = 1 mark","Rules must relate specifically to the computer laboratory environment"],
+   modelAnswer:"1. Use surge protectors for computers to protect against power surges.\n2. Clearly identify/label emergency equipment and know the location of emergency exits.\n\nOther accepted rules:\n• Have a list of emergency contact numbers and procedures posted in the lab.\n• Do not eat or drink near computer equipment.\n• Ensure use of personal protective equipment where necessary.\n• Switch off and unplug computers before cleaning.",
+   examinerTip:"Be specific — 'use surge protectors' is specific. 'Be careful with computers' is vague and earns no marks. One mark per specific rule.",
+   commonMistake:"Writing 'don't break the computers' or 'handle computers with care' — too vague. Name a SPECIFIC action or precaution."},
 
-  {id:"SA2c",section:"Section A — Essay",badge:"Q2c",
-   question:"Name <strong>two</strong> devices that can be used for BOTH input and output operations",marks:"2 marks",
-   keypoints:["Must name devices that function as BOTH input AND output","Each correct device = 1 mark","Common examples: Touchscreen, Headset, Modem, Network Interface Card (NIC)"],
-   modelAnswer:"1. Touchscreen — receives touch input AND displays output\n2. Headset (with microphone) — microphone inputs audio; speakers output audio\n\nOther accepted answers:\n• Modem (sends and receives data)\n• Network Interface Card (NIC)\n• Magnetic disk drive (reads and writes data)",
-   examinerTip:"Don't write 'computer' or 'laptop' as the device — name a specific peripheral component that serves both functions.",
-   commonMistake:"Writing 'keyboard and mouse' — these are INPUT only. Touchscreen is the classic both-input-and-output answer."},
+  {id:"24_Q2bii",section:"Q2 — File Organisation & Safety",badge:"Q2(b)(ii)",
+   question:"List <strong>three internet browsers</strong>",marks:"3 marks",
+   keypoints:["Must name THREE distinct internet browsers","Each correct browser = 1 mark","Common examples: Chrome, Firefox, Edge, Opera, UC Browser, Safari, Brave"],
+   modelAnswer:"1. Mozilla Firefox\n2. Google Chrome\n3. Microsoft Edge\n\nOther accepted browsers:\n• UC Browser\n• Opera / Opera Mini\n• Avant Browser\n• Internet Explorer\n• Vivaldi\n• Apple Safari\n• Brave Browser",
+   examinerTip:"Any three valid browser names earn full marks. Go with Chrome, Firefox, Edge — easy 3 marks!",
+   commonMistake:"Writing 'Google' (a search engine, not a browser) or 'Yahoo.' The BROWSER is the software (Chrome, Firefox). Google is the search engine you use inside the browser."},
 
-  {id:"SA3a",section:"Section A — Essay",badge:"Q3a",
-   question:"With a well-labelled diagram, explain: (i) Simplex  (ii) Half Duplex  (iii) Full Duplex modes of information transmission",marks:"6 marks",
-   keypoints:["Each mode requires: a definition AND a diagram = 2 marks each","Simplex: one-way only (A→B only)","Half Duplex: both directions but NOT simultaneously","Full Duplex: both directions SIMULTANEOUSLY"],
-   modelAnswer:"(i) SIMPLEX — Communication occurs in ONE direction only. The sender can only send; the receiver can only receive.\nDiagram: [Sender] ——→ [Receiver]\n\n(ii) HALF DUPLEX — Communication occurs in BOTH directions, but NOT at the same time. Only one party transmits at a time.\nDiagram: [Device A] ⇄ [Device B]  (note: not simultaneously)\n\n(iii) FULL DUPLEX — Communication occurs in BOTH directions SIMULTANEOUSLY. Both parties can send and receive at the same time.\nDiagram: [Device A] ⇆ [Device B]  (bidirectional, both at once)",
-   examinerTip:"Draw diagrams with arrows showing direction of communication. Label your diagram clearly — 'well-labelled' is its own mark. Don't skip the diagrams!",
-   commonMistake:"Forgetting the word 'simultaneously' for full duplex. Half duplex and full duplex both go in both directions — the difference is TIMING."},
+  // ── Q3 ──────────────────────────────────
+  {id:"24_Q3a",section:"Q3 — PowerPoint Features",badge:"Q3(a)",
+   question:"Explain the use of <strong>Custom Slide Show</strong> in Microsoft PowerPoint",marks:"3 marks",
+   keypoints:["Must explain what Custom Slide Show DOES","Key points: show only selected slides, tailor to different audiences, assist navigation","Each valid use/explanation = 1 mark"],
+   modelAnswer:"1. Custom slide show is used to show only selected slides during a presentation (not all slides in the file).\n2. It is used to tailor/customise a presentation to different audiences — the same file can show different slide sets to different groups.\n3. It assists in navigation during a presentation — allowing the presenter to jump to specific sections.",
+   examinerTip:"The key idea is SELECTION — custom slide show lets you choose WHICH slides to show. Communicate this idea of selective/customised presentation.",
+   commonMistake:"Confusing Custom Slide Show with running a normal Slide Show. The 'custom' part means you choose SPECIFIC slides — without a custom show, all slides play in order."},
 
-  {id:"SA3b",section:"Section A — Essay",badge:"Q3b",
-   question:"State ONE example each of: (i) Simplex  (ii) Half Duplex  (iii) Full Duplex mode of transmission",marks:"3 marks",
-   keypoints:["Each correct example = 1 mark","Examples must match the correct transmission mode","Must be communication/transmission examples"],
-   modelAnswer:"(i) Simplex example: Television broadcast / Radio broadcast / Keyboard to CPU\n\n(ii) Half Duplex example: Walkie-Talkie / CB Radio (Citizens Band Radio)\n\n(iii) Full Duplex example: Telephone call / Mobile phone conversation / Video call (Zoom/WhatsApp call)",
-   examinerTip:"The walkie-talkie example for half duplex is the most memorable — one person says 'over' before the other can speak. Classic half duplex!",
-   commonMistake:"Using 'television' for full duplex — a TV broadcast is one-way (simplex) because viewers can't transmit back to the station."},
+  {id:"24_Q3b",section:"Q3 — PowerPoint Features",badge:"Q3(b)",
+   question:"State <strong>two functions of Rehearse Timings</strong> in Microsoft PowerPoint",marks:"2 marks",
+   keypoints:["Must state TWO distinct functions","Key functions: records time per slide, enables automatic presentation, time management"],
+   modelAnswer:"1. Rehearse Timings is used to record the time spent on each slide during practice/rehearsal.\n2. It is used to run the presentation automatically — slides advance on their own based on the recorded timings.\n\nOther accepted:\n• It ensures effective time management / ensures the presenter stays within the allocated time limit.",
+   examinerTip:"Two marks, two functions. Core function = RECORDING TIME per slide. Second function = those timings make the presentation run automatically.",
+   commonMistake:"Writing 'it times the presentation' without explaining WHAT the timing does. Be specific: it records time per slide so slides advance automatically."},
 
-  {id:"SA3c",section:"Section A — Essay",badge:"Q3c",
-   question:"Name ONE component of a data communication system",marks:"1 mark",
-   keypoints:["Any ONE valid component of a data communication system","Must be a specific named component, not a vague term"],
-   modelAnswer:"Any ONE of the following:\n• Sender / Source\n• Receiver / Destination\n• Transmission medium / Channel (e.g. cable, fibre optic, wireless)\n• Message / Data\n• Protocol\n• Modem\n• Router",
-   examinerTip:"This is just 1 mark — write ONE clear component. Don't overthink it. 'Transmission medium' or 'Sender' are safe answers.",
-   commonMistake:"Writing 'computer' — that is a device, not a component of the communication system model. Use correct terminology."},
+  {id:"24_Q3c",section:"Q3 — PowerPoint Features",badge:"Q3(c)",
+   question:"List <strong>four types of illustrations</strong> that can be added to a presentation from the <em>Insert tab</em> of Microsoft PowerPoint",marks:"4 marks",
+   keypoints:["Must list FOUR types from the Insert tab Illustrations group","Each valid illustration type = 1 mark","Accepted: Shapes, Icons, 3D Models, SmartArt, Chart, Pictures"],
+   modelAnswer:"1. Shapes\n2. Icons\n3. 3D Models\n4. SmartArt\n\nOther accepted:\n• Chart\n• Pictures / Online Pictures",
+   examinerTip:"The question says from the INSERT TAB. The Illustrations group in the Insert tab contains: Shapes, Icons, 3D Models, SmartArt, Chart, Pictures. Stick to these.",
+   commonMistake:"Writing 'animation' or 'transitions' — these are NOT illustrations and NOT in the Insert tab. Illustrations = visual objects inserted into slides."},
 
-  {id:"SA4a",section:"Section A — Essay",badge:"Q4a",
-   question:"Differentiate between <strong>hackers</strong> and <strong>spammers</strong>",marks:"4 marks",
-   keypoints:["Must clearly define BOTH terms","Must highlight what makes them DIFFERENT","Hacker = gains unauthorized access to systems","Spammer = sends unsolicited/bulk messages/emails"],
-   modelAnswer:"HACKER: A hacker is a person who gains unauthorized access to a computer system or network, usually to steal, alter, or destroy data.\n\nSPAMMER: A spammer is a person who sends large volumes of unsolicited/unwanted messages (usually emails or texts) to many recipients, often for advertising or malicious purposes.\n\nKEY DIFFERENCE: A hacker breaks INTO systems/networks, while a spammer floods communication channels with unwanted messages without necessarily gaining system access.",
-   examinerTip:"Structure your answer clearly: define hacker, define spammer, then state the key difference. Examiners award marks for each part.",
-   commonMistake:"Saying a hacker is 'someone who destroys computers' — hackers primarily gain UNAUTHORIZED ACCESS; destruction may or may not follow."},
+  // ── Q4 ──────────────────────────────────
+  {id:"24_Q4ai",section:"Q4 — LAN / MIS / Internet Security",badge:"Q4(a)(i)",
+   question:"State <strong>two problems</strong> associated with uncontrolled access to the Internet by students",marks:"2 marks",
+   keypoints:["Must state TWO distinct problems","Each valid problem = 1 mark","Problems must result from UNCONTROLLED (unsupervised/unrestricted) access"],
+   modelAnswer:"1. Virus download — students may visit unsafe sites and download harmful programs/malware.\n2. Distraction from studies — students spend time on social media, games, or watching videos instead of studying.\n\nOther accepted problems:\n• Purchasing items online (misuse of school network)\n• Exposure to inappropriate/harmful content\n• Playing games to the detriment of their studies\n• Watching videos/movies / Streaming music during class time\n• Chatting on social media during classes",
+   examinerTip:"The key word is 'UNCONTROLLED' — your answers must be problems that arise BECAUSE access is not restricted or supervised. Generic internet problems alone may not earn marks.",
+   commonMistake:"Writing 'the internet is slow' — this is a technical issue, not a problem of uncontrolled access. Focus on BEHAVIOURAL and SECURITY problems."},
 
-  {id:"SA4b",section:"Section A — Essay",badge:"Q4b",
-   question:"State ONE importance of <em>add-in</em> in MS Excel",marks:"2 marks",
-   keypoints:["An add-in is an extra program that extends Excel's capabilities","Must state a specific importance/use, not just define add-in"],
-   modelAnswer:"Add-ins extend/expand the functionality of MS Excel by providing additional features and tools not available by default.\n\nExamples:\n• They enable complex data analysis (e.g. Analysis ToolPak for statistical functions)\n• They allow integration with external data sources\n• They add custom functions/formulas not in standard Excel",
-   examinerTip:"The word 'extend' or 'expand capabilities' is key to this answer. Use those words and you'll earn the marks.",
-   commonMistake:"Writing 'add-ins make Excel faster' — this is vague and likely wrong. Focus on EXTRA FEATURES/FUNCTIONALITY."},
+  {id:"24_Q4aii",section:"Q4 — LAN / MIS / Internet Security",badge:"Q4(a)(ii)",
+   question:"How can the problems stated in Q4(a)(i) be prevented?",marks:"3 marks",
+   keypoints:["Must state specific preventive measures — not just 'control internet'","Each valid, specific measure = 1 mark","Accepted: web nannies, firewalls, content filtering, supervised access, parental controls, safe search, virus detection software"],
+   modelAnswer:"1. Use of web nannies / content filtering software to block access to inappropriate or harmful websites.\n2. Supervised access — a teacher, technologist or adult monitors students during internet use.\n3. Use of virus detection / antivirus software to prevent malware downloads.\n\nOther accepted measures:\n• Implementing firewalls to monitor and manage internet traffic\n• Enable safe search settings in search engines\n• Utilise parental control settings on browsers, OS and routers\n• Establish Acceptable Use Policies with penalties for misuse\n• Screen time limits and scheduled internet access windows",
+   examinerTip:"Each measure must be SPECIFIC. 'Monitor students' = vague. 'Use content filtering software' = specific and earns the mark.",
+   commonMistake:"Writing 'ban students from using the internet' — this defeats the educational purpose. WAEC expects controlled/managed access solutions, not complete bans."},
 
-  {id:"SA4c",section:"Section A — Essay",badge:"Q4c",
-   question:"Explain the following computing terms: (i) <em>Cookies</em>  (ii) <em>Plugin</em>  (iii) <em>Web Crawlers</em>",marks:"6 marks",
-   keypoints:["Each term = 2 marks (definition + context/example)","Cookies: small files stored by browser to remember user info/preferences","Plugin: software component that adds a specific feature to an existing program","Web Crawlers: automated programs (bots) that browse the web to index pages for search engines"],
-   modelAnswer:"(i) COOKIES — Small text files stored on a user's device by a web browser when they visit a website. They are used to remember user preferences, login details, and browsing activity.\nExample: A website remembering your username so you don't retype it.\n\n(ii) PLUGIN — A software component or add-on that adds a specific feature or functionality to an existing application (especially web browsers).\nExample: Adobe Flash Player was a browser plugin for playing videos.\n\n(iii) WEB CRAWLERS — Automated programs (bots/spiders) used by search engines to systematically browse the internet, discover web pages, and index their content for search results.\nExample: Google uses web crawlers (Googlebot) to index websites.",
-   examinerTip:"For each term, give: (1) what it IS, and (2) what it DOES or an example. This ensures you hit both marks per term.",
-   commonMistake:"Saying cookies are 'viruses' or 'harmful files' — cookies are generally harmless data files. Some can be misused, but they are NOT malware."},
+  {id:"24_Q4b",section:"Q4 — LAN / MIS / Internet Security",badge:"Q4(b)",
+   question:"Give <strong>one reason</strong> why user authentication is required before access to the system is granted",marks:"2 marks",
+   keypoints:["Must state ONE clear reason for authentication","Reason must logically explain WHY authentication is needed","Accepted: prevent unauthorized access, prevent impersonation, data safety, registered users only"],
+   modelAnswer:"Authentication is required to prevent unauthorized access — ensuring that only registered and approved users can gain access to the system and its data.\n\nOther accepted reasons:\n• To prevent impersonation of authorised users\n• To ensure data integrity and safety of stored information\n• To ensure only registered users have access to the system\n• To support controlled remote and mobile access",
+   examinerTip:"One reason, but explain it FULLY. 'To prevent unauthorized access' alone may earn 1 mark. Add 'ensuring only registered users access the system and its data' to secure both marks.",
+   commonMistake:"Writing 'to make the system secure' without specifying what it is being secured FROM. Be specific about what authentication prevents."},
 
-  // SECTION B
-  {id:"SB5a",section:"Section B — Practical",badge:"Q5a",
-   question:"Identify the type of application whose interface is shown in <strong>Figure 2</strong>",marks:"2 marks",
-   keypoints:["Figure 2 shows a slide with 'Click to add title' placeholder — this is PRESENTATION software","Must name the TYPE and give an example for full marks"],
-   modelAnswer:"The interface shown in Figure 2 is a Presentation Software (also called slide-making software).\n\nExample: Microsoft PowerPoint",
-   examinerTip:"Don't just say 'PowerPoint' — say 'presentation software/application' as the TYPE, then PowerPoint as the example.",
-   commonMistake:"Saying it's a 'word processing application' — Word does not have slide interfaces with 'Click to add title' placeholders."},
+  {id:"24_Q4c",section:"Q4 — LAN / MIS / Internet Security",badge:"Q4(c)",
+   question:"Table 2 shows login activities (Column X) and login steps (Column Y). Specify the correct order of steps (i)–(v) using letters A–E:<br><br><strong>A</strong>: System authenticates username and password &nbsp; <strong>B</strong>: Click on login &nbsp; <strong>C</strong>: Enter password &nbsp; <strong>D</strong>: Access granted/denied &nbsp; <strong>E</strong>: Enter username",marks:"5 marks",
+   keypoints:["Must arrange all 5 steps in the correct logical login sequence","Each correct placement = 1 mark","Correct order: (i)E → (ii)C → (iii)B → (iv)A → (v)D"],
+   modelAnswer:"(i)  → E: Enter username  (first — identify yourself)\n(ii) → C: Enter password  (second — prove your identity)\n(iii)→ B: Click on login  (third — submit credentials)\n(iv) → A: System authenticates  (fourth — system checks your credentials)\n(v)  → D: Access granted/denied  (fifth — result of authentication)\n\nLogic: You cannot authenticate before entering credentials. You cannot be granted/denied access before authentication checks are done.",
+   examinerTip:"Think through the REAL PROCESS of logging in step by step. Username (E) → Password (C) → Submit/Login (B) → System checks (A) → Result (D). 5 real-life steps = 5 easy marks.",
+   commonMistake:"Placing 'Access granted' (D) before 'System authenticates' (A) — access cannot be granted before the system has CHECKED your credentials. Check (A) MUST come before result (D)."},
 
-  {id:"SB5b",section:"Section B — Practical",badge:"Q5b",
-   question:"Outline the steps to: (i) Insert a new slide  (ii) Delete a slide — in the Figure 2 application (PowerPoint)",marks:"4 marks",
-   keypoints:["Steps must be in correct logical order","Keyboard shortcut Ctrl+M is acceptable for insert","Right-click method is expected for both operations"],
-   modelAnswer:"(i) TO INSERT A NEW SLIDE:\n1. Click on the slide panel on the left where you want the new slide\n2. Right-click and select 'New Slide'\nOR: Click the Home tab → click 'New Slide' in the Slides group\nOR: Press Ctrl + M\n\n(ii) TO DELETE A SLIDE:\n1. Click on the slide you want to delete in the slide panel\n2. Right-click on the slide\n3. Select 'Delete Slide'\nOR: Select the slide and press the Delete key on the keyboard",
-   examinerTip:"Always write steps as numbered points starting with verbs (Click, Right-click, Select). This shows the examiner a clear logical sequence.",
-   commonMistake:"Writing 'go to File and insert slide' — the Insert/Home tab is the correct location, not the File menu. File is for saving/printing/opening."},
+  // ── Q5 (Section B) ───────────────────────
+  {id:"24_Q5a",section:"Q5 — Section B: MS Access",badge:"Q5(a)",
+   question:"Highlight the steps to <strong>create a new table</strong> in MS Access",marks:"4 marks",
+   keypoints:["Must list correct sequential steps","Steps should start from opening/creating the database","Must include Create tab, selecting Table, defining fields and saving with a name"],
+   modelAnswer:"1. Open MS Access and open or create a new database\n2. Click on Create on the ribbon/menu bar\n3. Select Table (Datasheet View) OR Table Design (Design View)\n4. In Design View: enter field names and set the data type for each field\n5. Right-click the primary key field and select 'Primary Key'\n6. Click Save (Ctrl+S) and type a name for the new table\n7. Click OK\n\nAlternative:\n1. Click File → New → Blank Desktop Database\n2. Type the database name in the File Name box and click Create\n3. A new blank table opens — define field names and data types",
+   examinerTip:"The examiner expects: Create tab → Table → Define fields → Save with name. These 4 stages cover the marks.",
+   commonMistake:"Confusing TABLE creation with DATABASE creation. You must first open/create a database before creating a table inside it."},
 
-  {id:"SB5c",section:"Section B — Practical",badge:"Q5c",
-   question:"State <strong>two</strong> examples of the application shown in Figure 2",marks:"2 marks",
-   keypoints:["Must name presentation software applications","Each correct example = 1 mark"],
-   modelAnswer:"1. Microsoft PowerPoint\n2. Google Slides\n\nOther accepted answers:\n• LibreOffice Impress\n• Keynote (Apple)\n• Prezi",
-   examinerTip:"Microsoft PowerPoint is the must-know answer. Add Google Slides as your second — widely accepted and free.",
-   commonMistake:"Writing 'Microsoft Word' or 'MS Excel' — these are NOT presentation software."},
+  {id:"24_Q5b",section:"Q5 — Section B: MS Access",badge:"Q5(b)",
+   question:"Highlight the steps to <strong>generate a query</strong> in MS Access",marks:"4 marks",
+   keypoints:["Must mention Create tab → Query Wizard","Must mention selecting the table/query that contains the data","Must include adding required fields to Selected Fields section","Must include clicking Finish/running the query"],
+   modelAnswer:"1. Click on Create on the ribbon bar\n2. Click on Query Wizard\n3. Select 'Simple Query Wizard' and click OK\n4. Select the Table or Query that contains the required data\n5. Add the required fields to the 'Selected Fields' section (using the > button)\n6. Click Next\n7. Choose Detail or Summary query, then click Next\n8. Type a name for the query\n9. Click Finish to run and view the query results",
+   examinerTip:"Key steps: Create → Query Wizard → Select Table → Add Fields → Finish. Each step is a mark. Don't skip 'Add Fields' — it's the most important step.",
+   commonMistake:"Describing how to open Query Wizard but forgetting to mention ADDING FIELDS to the Selected Fields section. Without this, the query produces no useful output."},
 
-  {id:"SB5di",section:"Section B — Practical",badge:"Q5d(i)",
-   question:"Give TWO uses of the application shown in Figure 2 (presentation software)",marks:"2 marks",
-   keypoints:["Must relate specifically to PRESENTATION software use cases","Each valid use = 1 mark"],
-   modelAnswer:"1. Creating and delivering slideshows/presentations for lectures, business meetings, or seminars.\n2. Designing visual aids with text, images, charts, and multimedia for teaching or public speaking.\n\nOther accepted uses:\n• Creating animated slide-based tutorials\n• Producing infographics and visual reports",
-   examinerTip:"Focus on what PRESENTATIONS are used for — teaching, business pitches, seminars. Don't give general computer uses.",
-   commonMistake:"Writing 'for typing documents' — that's MS Word. Presentation software is specifically for creating slideshows."},
+  {id:"24_Q5c",section:"Q5 — Section B: MS Access",badge:"Q5(c)",
+   question:"Highlight the steps to <strong>create a Split Form</strong> in MS Access",marks:"3 marks",
+   keypoints:["Must select the data source first (Table or Query)","Must go to Create tab","Must select More Forms → Split Form","Split Form shows BOTH form view (top) and datasheet view (bottom) simultaneously"],
+   modelAnswer:"1. Select the Table or Query that contains the data\n2. Click on the Create tab on the ribbon bar\n3. Click on 'More Forms'\n4. Click on 'Split Form'\n5. MS Access automatically generates a split form showing:\n   — Form view at the top (for viewing/entering one record at a time)\n   — Datasheet view at the bottom (for seeing all records)\n6. Save the form with an appropriate name",
+   examinerTip:"A Split Form = TWO views simultaneously: form view + datasheet view. Mention this dual-view nature to show the examiner you understand what Split Form means.",
+   commonMistake:"The Split Form option is inside 'More Forms' — not directly on the ribbon. Students who miss this step say 'click Split Form' without 'click More Forms' first."},
 
-  {id:"SB5dii",section:"Section B — Practical",badge:"Q5d(ii)",
-   question:"Give TWO differences between <strong>transitions</strong> and <strong>animations</strong> in the presentation application",marks:"4 marks",
-   keypoints:["Transitions = effects that happen BETWEEN slides (slide-to-slide movement)","Animations = effects applied to individual OBJECTS ON a slide","Must present as clear comparison — use numbered contrasts"],
-   modelAnswer:"1. Transitions are effects applied to a WHOLE SLIDE as it moves from one slide to the next, while Animations are effects applied to individual OBJECTS (text, images, shapes) within a single slide.\n\n2. Transitions occur between slides (e.g. Fade, Wipe, Push), while Animations occur on a slide without changing the slide itself (e.g. Fly In, Spin, Bounce).",
-   examinerTip:"The key contrast word is SLIDE vs OBJECT. Transitions = whole slide changing. Animations = objects on a slide moving/appearing.",
-   commonMistake:"Saying transitions and animations are the same thing or just describing transitions as 'moving effects.' They are distinct features with distinct functions."},
+  {id:"24_Q5d",section:"Q5 — Section B: MS Access",badge:"Q5(d)",
+   question:"Highlight the steps to <strong>print a report</strong> in MS Access",marks:"3 marks",
+   keypoints:["Must open/select the report from the Navigation Pane first","Must go through File → Print","Must mention Print dialog and clicking OK to print"],
+   modelAnswer:"1. In the Navigation Pane, locate and select the report to be printed\n2. Right-click on the report and select 'Open' (or double-click to open it)\n   Alternative: Right-click the report → click Print... to print directly\n3. Click on File in the menu bar\n4. Click on Print (or press Ctrl + P)\n5. In the Print dialog box, set printing options (printer, copies, page range)\n6. Click OK to print",
+   examinerTip:"The Navigation Pane step is critical — you must OPEN the report before printing. If you skip this and go straight to File → Print, you lose marks.",
+   commonMistake:"Writing 'click File → Print → select the report' — in MS Access, you cannot select a report from the Print dialog. You must OPEN it first from the Navigation Pane."},
 
-  {id:"SB5ei",section:"Section B — Practical",badge:"Q5e(i)",
-   question:"Highlight the steps to <strong>run a slideshow</strong> in the presentation application (Figure 2)",marks:"3 marks",
-   keypoints:["Correct steps for starting/running a slideshow in PowerPoint","From beginning: F5 OR Slide Show tab → From Beginning","From current slide: Shift+F5 OR click the slideshow icon at the bottom"],
-   modelAnswer:"Steps to run a slideshow:\n1. Open the presentation in Microsoft PowerPoint\n2. Click on the Slide Show tab on the ribbon\n3. Click 'From Beginning' to start from the first slide\n   OR press the F5 key on the keyboard\n\nTo start from the current slide:\n• Click 'From Current Slide' OR press Shift + F5",
-   examinerTip:"The examiner expects at least: Slide Show tab → From Beginning. The keyboard shortcut F5 is a bonus worth mentioning.",
-   commonMistake:"Writing 'click View → Slideshow' — the correct tab is SLIDE SHOW, not View. Know your ribbon tabs."},
+  // ── Q6 ──────────────────────────────────
+  {id:"24_Q6a",section:"Q6 — MS Word & Excel",badge:"Q6(a)",
+   question:"A document created in MS Word has parts cut off when printed in portrait orientation. Highlight the steps to <strong>change orientation to Landscape</strong> and print on <strong>A4 paper</strong>",marks:"4 marks",
+   keypoints:["Must click Page Layout tab first","Must select Orientation → Landscape","Must select A4 paper size","Must include File → Print → Select printer → OK/Print"],
+   modelAnswer:"1. Click on the Home tab\n2. Click on 'Page Layout'\n3. Click on 'Orientation'\n4. Select 'Landscape'\n5. Select A4 under (paper) Size\n6. Click on File\n7. Click on Print / press Ctrl+P\n8. Select the printer\n9. Click OK / Print button",
+   examinerTip:"Page Layout → Orientation → Landscape is the core path. Don't forget to select A4 paper SIZE — the question specifically asks for it and it earns a mark.",
+   commonMistake:"Going to File → Print BEFORE changing orientation. Always change orientation FIRST. Also — never forget to select A4 paper size; the question mentions it explicitly."},
 
-  {id:"SB5eii",section:"Section B — Practical",badge:"Q5e(ii)",
-   question:"Highlight the steps to <strong>print a handout of 6 slides per page</strong> in the presentation application",marks:"3 marks",
-   keypoints:["Must navigate to Print settings correctly","Must specifically select 'Handouts' layout and '6 slides per page' option","Steps must be in logical sequence"],
-   modelAnswer:"Steps to print a handout with 6 slides per page:\n1. Click on the File tab\n2. Select Print (or press Ctrl + P)\n3. Under Settings, click on the 'Full Page Slides' dropdown\n4. Under Handouts, select '6 Slides Horizontal' (or '6 Slides Vertical')\n5. Set the number of copies as required\n6. Click the Print button",
-   examinerTip:"The critical step examiners look for is steps 3–4: changing from 'Full Page Slides' to '6 Slides' under Handouts. Without that, no marks for handout selection.",
-   commonMistake:"Saying 'File → Print → print 6 pages' — this prints 6 PAGES, not 6 SLIDES on ONE page. The Handouts layout option is what changes the format."},
+  {id:"24_Q6bi",section:"Q6 — MS Word & Excel",badge:"Q6(b)(i)",
+   question:"Name the <strong>concept</strong> used to keep headings visible while scrolling through a worksheet in Microsoft Excel",marks:"1 mark",
+   keypoints:["One correct name required","Correct answer: Freeze Pane / Freeze Panes"],
+   modelAnswer:"Freeze Pane\n(Also accepted: Freeze Panes)",
+   examinerTip:"This is 1 mark for just the name. Write it clearly and move on. Don't write steps here — just the concept name.",
+   commonMistake:"Writing 'Lock Row' or 'Pin Header' — these terms don't exist in MS Excel. The correct terminology is FREEZE PANE / FREEZE PANES."},
 
-  {id:"SB6a",section:"Section B — Practical",badge:"Q6a",
-   question:"Describe the step-by-step approach to <strong>CREATE</strong> a mail merge using a template in MS Word",marks:"5 marks",
-   keypoints:["Mail merge = merging a letter/template with a list of contacts/data source","Steps must follow the Mailings tab workflow in MS Word","Must mention: opening template, connecting to data source, inserting merge fields"],
-   modelAnswer:"Steps to CREATE a mail merge:\n1. Open Microsoft Word and open/create the template document\n2. Click on the Mailings tab on the ribbon\n3. Click 'Start Mail Merge' and select the document type (e.g. Letters)\n4. Click 'Select Recipients' → choose 'Use an Existing List'\n5. Browse and select the contacts database/file (e.g. Excel sheet or Access database)\n6. Position the cursor where you want contact details to appear in the template\n7. Click 'Insert Merge Field' and select the appropriate fields (e.g. First Name, Address)\n8. Repeat step 7 for all required fields in the template\n9. Click 'Preview Results' to review how the merged document will look",
-   examinerTip:"The examiner wants to see: Mailings tab → Start Mail Merge → Select Recipients → Insert Merge Fields. These 4 stages are the backbone of the answer.",
-   commonMistake:"Skipping the 'Insert Merge Field' step — many students describe how to connect to the data source but forget to explain how the fields actually get placed in the document."},
+  {id:"24_Q6bii",section:"Q6 — MS Word & Excel",badge:"Q6(b)(ii)",
+   question:"Outline the steps to <strong>keep headings fixed</strong> while scrolling in a Microsoft Excel worksheet",marks:"3 marks",
+   keypoints:["Must be sequential steps","Step 1: Select the heading row to freeze","Step 2: Go to View tab → Freeze Panes","Step 3: Select Freeze Top Row from dropdown"],
+   modelAnswer:"1. Select the heading row to freeze\n2. Click on the View tab\n3. Select 'Freeze Panes' from the View tab\n4. Select 'Freeze Top Row' from the drop-down menu",
+   examinerTip:"Three marks = three steps: (1) select the row, (2) View tab → Freeze Panes, (3) Freeze Top Row. Each step is a separate mark.",
+   commonMistake:"Going to the Format or Home tab — the Freeze Panes feature is ONLY in the VIEW tab. Always mention 'View tab' specifically."},
 
-  {id:"SB6b",section:"Section B — Practical",badge:"Q6b",
-   question:"Describe the step-by-step approach to <strong>PREVIEW AND COMPLETE</strong> a mail merge using a template in MS Word",marks:"4 marks",
-   keypoints:["Preview: use 'Preview Results' to check merged output before printing","Complete: Finish & Merge → Print Documents OR Edit Individual Documents","Must mention checking for errors before completing"],
-   modelAnswer:"Steps to PREVIEW and COMPLETE a mail merge:\n\nPREVIEW:\n1. Click 'Preview Results' in the Mailings tab to see how merged data appears\n2. Use the navigation arrows (← →) to scroll through and preview each merged record\n3. Check for any errors in the field placement or data\n\nCOMPLETE:\n4. Click 'Finish & Merge' in the Mailings tab\n5. Choose one of the following options:\n   • 'Print Documents' — sends all merged letters directly to the printer\n   • 'Edit Individual Documents' — creates a new Word file with all merged letters for review/editing before printing\n6. Confirm the selection (All records, Current record, or a range) and click OK",
-   examinerTip:"Key phrases: 'Preview Results', 'Finish & Merge', 'Print Documents' or 'Edit Individual Documents.' Use exact MS Word terminology.",
-   commonMistake:"Writing 'click print and it's done' — you must go through Finish & Merge, not just Ctrl+P. Examiners want the mail merge workflow, not generic printing steps."}
+  {id:"24_Q6biii",section:"Q6 — MS Word & Excel",badge:"Q6(b)(iii)",
+   question:"Identify the <strong>two actions</strong> to display each student record at the same time on both versions of the result file",marks:"2 marks",
+   keypoints:["Must name BOTH actions correctly","Action 1: View Side-by-Side","Action 2: Synchronous Scrolling"],
+   modelAnswer:"I. View Side-by-Side — displays both files simultaneously on screen for comparison\nII. Synchronous Scrolling — ensures both files scroll together so matching records stay aligned",
+   examinerTip:"Two actions = two marks. Use the exact names: 'View Side-by-Side' and 'Synchronous Scrolling.' Both are found in the View tab of MS Excel.",
+   commonMistake:"Writing 'split screen' — that's a different feature (splits ONE window). View Side-by-Side opens TWO separate file windows next to each other."},
+
+  {id:"24_Q6biv",section:"Q6 — MS Word & Excel",badge:"Q6(b)(iv)",
+   question:"Highlight the steps to achieve View Side-by-Side and Synchronous Scrolling in Q6(b)(iii)",marks:"3 marks",
+   keypoints:["Must open both files first","Must activate View Side-by-Side from View tab","Must activate Synchronous Scrolling"],
+   modelAnswer:"1. Open the two files (both versions of the result broadsheet)\n2. While on the current file, click on 'View Side by Side' in the View tab\n3. Click on 'Synchronous Scrolling' (also in the View tab) to enable both files to scroll together",
+   examinerTip:"Three steps = three marks: (1) open both files, (2) View Side-by-Side, (3) Synchronous Scrolling. Write as a numbered list.",
+   commonMistake:"Forgetting step 1 — you must open BOTH files before viewing them side by side. You cannot compare two files if only one is open."},
+
+  {id:"24_Q6c",section:"Q6 — MS Word & Excel",badge:"Q6(c)",
+   question:"List <strong>two gadgets</strong> needed to display the content of a laptop computer to an audience in an auditorium",marks:"2 marks",
+   keypoints:["Must list TWO gadgets/devices","Each valid gadget = 1 mark","Many accepted answers — any display or connection gadgets are fine"],
+   modelAnswer:"Any TWO of the following:\n1. Projector\n2. HDMI cable / VGA cable\n\nOther accepted gadgets:\n• Smart board / Smart TV\n• White board / plain wall / projection screen\n• Casting device / wireless adapter\n• USB cable • Audio system • Laptop stand • Presenter / Laser pointer",
+   examinerTip:"Projector is the obvious first answer. For the second, any connection cable or display surface works. HDMI cable or VGA cable are safe choices.",
+   commonMistake:"Writing 'a computer' or 'the laptop' — these are the SOURCE of the content, not the gadgets needed to DISPLAY it to an audience."}
+
+];
+
+
+// ══════════════════════════════════════════
+//  2025 THEORY DATA
+// ══════════════════════════════════════════
+const theory2025 = [
+  {id:"SA1ai",section:"Section A — Essay",badge:"Q1a(i)",question:"<strong>Explain the term:</strong> Data Processing",marks:"2 marks",keypoints:["Define what data processing IS — not just 'using a computer'","Mention: raw data collected → manipulated/transformed → meaningful output/information","Key contrast: 'raw facts (data)' → 'meaningful information'"],modelAnswer:"Data processing is a series of operations/actions carried out to collect, organise, manipulate, and convert raw facts (data) into meaningful information.\n\nOR: Data processing is the manipulation of raw data by a computer or other device to produce useful and meaningful information.",examinerTip:"Examiners want to see 'raw data' and 'meaningful information/output' — that contrast is the core. Don't just write 'processing data on a computer.'",commonMistake:"Writing only 'the use of a computer to process data' — too vague, earns no marks. You must show the INPUT → PROCESS → OUTPUT concept."},
+  {id:"SA1aii",section:"Section A — Essay",badge:"Q1a(ii)",question:"<strong>Explain the term:</strong> Data Collation",marks:"2 marks",keypoints:["Must convey: gathering data from multiple sources","Must mention: arranging/organising into a structured/usable format","Must include the purpose: for input into the computer or further processing"],modelAnswer:"Data collation is the systematic arrangement/gathering of data collected from different sources into a structured and usable format in preparation for input into the computer.\n\nOR: It is the process of gathering and arranging data from various sources into a machine-readable form.",examinerTip:"Two key ideas must appear: (1) gathering from different sources, and (2) arranging/organising for use. Miss either and you lose marks.",commonMistake:"Confusing data collation with data collection. Collection = just gathering; collation = gathering AND systematically organising."},
+  {id:"SA1b",section:"Section A — Essay",badge:"Q1b",question:"<strong>Describe the Data Processing Cycle</strong>",marks:"4 marks",keypoints:["Must name ALL stages in the correct order","Required stages: Input → Processing → Output → Storage","Feedback is optional but earns a bonus","Brief description of each stage is ideal for full marks"],modelAnswer:"The Data Processing Cycle is the sequence of stages involved in processing data from input to output and storage. It consists of:\n\n1. INPUT — Raw data is collected and entered into the computer system.\n2. PROCESSING — The data is manipulated, sorted, calculated or transformed.\n3. OUTPUT — Processed data (information) is presented to the user (e.g. on screen or printed).\n4. STORAGE — The information is saved for future use.\n(5. FEEDBACK — Output is returned to the input stage to improve the process — optional.)",examinerTip:"Always write the stages as a numbered list or clearly labelled points. Writing them in a paragraph without labels risks the examiner missing them.",commonMistake:"Forgetting STORAGE as a stage — most students write only Input, Processing, Output. The cycle is incomplete without storage."},
+  {id:"SA1c",section:"Section A — Essay",badge:"Q1c",question:"State <strong>four</strong> benefits of the computer as a tool for processing data",marks:"4 marks",keypoints:["Must state FOUR clear, distinct benefits","Each benefit = 1 mark","Benefits must relate to data PROCESSING specifically","Avoid vague answers like 'it is good' or 'it is useful'"],modelAnswer:"1. High Speed — Computers process data at very high speed compared to manual methods.\n2. Accuracy — Computers produce highly accurate results, reducing human error.\n3. Large Storage Capacity — Computers can store and retrieve huge volumes of data.\n4. Consistency/Reliability — Computers handle repetitive processing tasks without fatigue.\n\nOther acceptable answers:\n• Cost-effective over time\n• Fast data retrieval\n• Ability to handle large volume of data simultaneously\n• Improved reliability of output",examinerTip:"Write them as a numbered list. Examiners mark point by point — a clear list makes it easy for them to award your marks.",commonMistake:"Writing general computer benefits (like 'it can browse the internet') instead of data PROCESSING benefits. Stay on topic."},
+  {id:"SA3a",section:"Section A — Essay",badge:"Q3a",question:"Explain: (i) Simplex  (ii) Half Duplex  (iii) Full Duplex modes of information transmission with diagrams",marks:"6 marks",keypoints:["Each mode requires: a definition AND a diagram = 2 marks each","Simplex: one-way only (A→B only)","Half Duplex: both directions but NOT simultaneously","Full Duplex: both directions SIMULTANEOUSLY"],modelAnswer:"(i) SIMPLEX — One direction only. Sender transmits; receiver cannot send back.\nDiagram: [Sender] ——→ [Receiver]\n\n(ii) HALF DUPLEX — Both directions, but NOT at the same time.\nDiagram: [A] ⇄ [B] (one at a time)\n\n(iii) FULL DUPLEX — Both directions SIMULTANEOUSLY.\nDiagram: [A] ⇆ [B] (both at once)",examinerTip:"Draw diagrams with arrows. Label your diagram. 'Well-labelled' earns its own mark.",commonMistake:"Forgetting 'simultaneously' for full duplex — both half and full duplex are bidirectional; the difference is TIMING."},
+  {id:"SA3b",section:"Section A — Essay",badge:"Q3b",question:"State ONE example each of Simplex, Half Duplex, and Full Duplex transmission",marks:"3 marks",keypoints:["Each correct example = 1 mark","Must match the correct mode"],modelAnswer:"Simplex: Television broadcast / Radio broadcast\nHalf Duplex: Walkie-Talkie / CB Radio\nFull Duplex: Telephone call / Mobile phone / WhatsApp/Zoom call",examinerTip:"Walkie-talkie for half duplex is the classic memorable example — one person says 'over' before the other can speak.",commonMistake:"Using 'television' for full duplex — TV broadcast is one-way (simplex) because viewers cannot transmit back to the station."},
+  {id:"SA4a",section:"Section A — Essay",badge:"Q4a",question:"Differentiate between <strong>hackers</strong> and <strong>spammers</strong>",marks:"4 marks",keypoints:["Must clearly define BOTH terms","Must highlight what makes them DIFFERENT","Hacker = gains unauthorized access to systems","Spammer = sends unsolicited/bulk messages"],modelAnswer:"HACKER: A person who gains unauthorized access to a computer system or network to steal, alter, or destroy data.\n\nSPAMMER: A person who sends large volumes of unsolicited/unwanted messages (emails/texts) to many recipients.\n\nKEY DIFFERENCE: A hacker breaks INTO systems; a spammer floods communication channels with unwanted messages without necessarily gaining system access.",examinerTip:"Structure clearly: define hacker, define spammer, state key difference. Examiners award marks for each part.",commonMistake:"Saying a hacker 'destroys computers' — hackers primarily gain UNAUTHORIZED ACCESS; destruction may or may not follow."},
+  {id:"SA4c",section:"Section A — Essay",badge:"Q4c",question:"Explain: (i) <em>Cookies</em>  (ii) <em>Plugin</em>  (iii) <em>Web Crawlers</em>",marks:"6 marks",keypoints:["Each term = 2 marks (definition + context/example)","Cookies: small files stored by browser to remember user info","Plugin: software component adding a feature to an existing program","Web Crawlers: bots that browse web to index pages for search engines"],modelAnswer:"(i) COOKIES — Small text files stored on a user's device by a browser when visiting a website. Used to remember user preferences and login details.\n\n(ii) PLUGIN — A software add-on that adds a specific feature to an existing application (especially browsers). Example: Adobe Flash Player.\n\n(iii) WEB CRAWLERS — Automated bots used by search engines to systematically browse the internet and index web page content. Example: Google's Googlebot.",examinerTip:"For each term: (1) what it IS, (2) what it DOES or an example. This ensures you hit both marks per term.",commonMistake:"Saying cookies are 'viruses' — cookies are generally harmless data files. Some can be misused but they are NOT malware."},
+  {id:"SB5dii",section:"Section B — Practical",badge:"Q5d(ii)",question:"State TWO differences between <strong>transitions</strong> and <strong>animations</strong> in PowerPoint",marks:"4 marks",keypoints:["Transitions = effects between slides","Animations = effects on objects within a slide","Present as clear comparison"],modelAnswer:"1. Transitions are effects applied to a WHOLE SLIDE as it moves from one to the next, while Animations are effects applied to individual OBJECTS (text, images) within a slide.\n\n2. Transitions occur between slides (e.g. Fade, Push), while Animations occur on a slide without changing the slide itself (e.g. Fly In, Spin).",examinerTip:"Key contrast word: SLIDE vs OBJECT. Transitions = whole slide. Animations = objects on a slide.",commonMistake:"Describing both as 'moving effects' — they are distinct features with distinct functions."},
+  {id:"SB6a",section:"Section B — Practical",badge:"Q6a",question:"Describe step-by-step how to <strong>CREATE a mail merge</strong> using a template in MS Word",marks:"5 marks",keypoints:["Steps must follow Mailings tab workflow","Must mention: opening template, connecting to data source, inserting merge fields"],modelAnswer:"1. Open MS Word and open/create the template document\n2. Click on the Mailings tab\n3. Click 'Start Mail Merge' → select document type (e.g. Letters)\n4. Click 'Select Recipients' → 'Use an Existing List'\n5. Browse and select the data file (Excel sheet or Access database)\n6. Position cursor where contact details should appear\n7. Click 'Insert Merge Field' and select appropriate fields\n8. Repeat for all required fields\n9. Click 'Preview Results' to review",examinerTip:"Key stages: Mailings tab → Start Mail Merge → Select Recipients → Insert Merge Fields. These 4 stages are the backbone.",commonMistake:"Describing how to connect to the data source but forgetting to explain how merge fields are inserted into the document."}
 ];
 
 // ══════════════════════════════════════════
 //  STATE
 // ══════════════════════════════════════════
-let objDone = new Set(JSON.parse(localStorage.getItem('dp2025_obj')||'[]'));
-let thDone  = new Set(JSON.parse(localStorage.getItem('dp2025_th') ||'[]'));
+let objDone2024 = new Set(JSON.parse(localStorage.getItem('dp2024_obj')||'[]'));
+let thDone2024  = new Set(JSON.parse(localStorage.getItem('dp2024_th') ||'[]'));
+let objDone2025 = new Set(JSON.parse(localStorage.getItem('dp2025_obj')||'[]'));
+let thDone2025  = new Set(JSON.parse(localStorage.getItem('dp2025_th') ||'[]'));
+
+let currentYear = '2025';
 let currentTab = 'objectives';
 let currentFilter = 'all';
 let searchTerm = '';
 
+function getObjectives(){ return currentYear === '2024' ? objectives2024 : objectives2025; }
+function getTheory(){ return currentYear === '2024' ? theory2024 : theory2025; }
+function getObjDone(){ return currentYear === '2024' ? objDone2024 : objDone2025; }
+function getThDone(){ return currentYear === '2024' ? thDone2024 : thDone2025; }
+
 function save(){
-  localStorage.setItem('dp2025_obj',JSON.stringify([...objDone]));
-  localStorage.setItem('dp2025_th', JSON.stringify([...thDone]));
+  localStorage.setItem('dp2024_obj',JSON.stringify([...objDone2024]));
+  localStorage.setItem('dp2024_th', JSON.stringify([...thDone2024]));
+  localStorage.setItem('dp2025_obj',JSON.stringify([...objDone2025]));
+  localStorage.setItem('dp2025_th', JSON.stringify([...thDone2025]));
 }
 
-// ══════════════════════════════════════════
-//  PROGRESS
-// ══════════════════════════════════════════
 function updateProgress(){
-  const totalObj = objectives.length;
-  const totalTh  = theory.length;
-  const total    = currentTab === 'objectives' ? totalObj : totalTh;
-  const doneSet  = currentTab === 'objectives' ? objDone : thDone;
-  const done     = doneSet.size;
-  const pct      = total > 0 ? Math.round((done/total)*100) : 0;
-  document.getElementById('obj-total').textContent    = totalObj;
-  document.getElementById('theory-total').textContent = totalTh;
-  document.getElementById('done-count').textContent   = objDone.size + thDone.size;
+  const objectives = getObjectives();
+  const theory = getTheory();
+  const total = currentTab === 'objectives' ? objectives.length : theory.length;
+  const doneSet = currentTab === 'objectives' ? getObjDone() : getThDone();
+  const done = doneSet.size;
+  const pct = total > 0 ? Math.round((done/total)*100) : 0;
+  document.getElementById('obj-total').textContent = objectives.length;
+  document.getElementById('theory-total').textContent = theory.length;
+  document.getElementById('done-count').textContent = getObjDone().size + getThDone().size;
   document.getElementById('progress-fill').style.width = pct+'%';
   document.getElementById('progress-text').textContent = done+' / '+total;
+  document.getElementById('tab-obj-btn').textContent = '📝 Objectives ('+objectives.length+')';
+  document.getElementById('tab-th-btn').textContent = '✍️ Theory ('+theory.length+')';
 }
 
-// ══════════════════════════════════════════
-//  TAB SWITCHING
-// ══════════════════════════════════════════
+function switchYear(yr){
+  currentYear = yr;
+  currentFilter = 'all';
+  searchTerm = '';
+  document.getElementById('search').value = '';
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.toggle('active',b.dataset.filter==='all'));
+  document.querySelectorAll('.year-btn').forEach(b=>b.classList.toggle('active', b.textContent === yr));
+  updateProgress();
+  if(currentTab === 'objectives') renderObjectives(); else renderTheory();
+}
+
 function switchTab(tab){
   currentTab = tab;
   currentFilter = 'all';
@@ -433,34 +540,38 @@ function toggleCard(id){
 }
 
 function toggleDoneObj(num){
-  if(objDone.has(num)) objDone.delete(num); else objDone.add(num);
+  const done = getObjDone();
+  if(done.has(num)) done.delete(num); else done.add(num);
   save(); updateProgress(); renderObjectives();
 }
 
 function toggleDoneTh(id){
-  if(thDone.has(id)) thDone.delete(id); else thDone.add(id);
+  const done = getThDone();
+  if(done.has(id)) done.delete(id); else done.add(id);
   save(); updateProgress(); renderTheory();
 }
 
-// ══════════════════════════════════════════
-//  RENDER OBJECTIVES
-// ══════════════════════════════════════════
 function renderObjectives(){
   const list = document.getElementById('obj-list');
+  const objectives = getObjectives();
   const s = searchTerm;
   const filtered = objectives.filter(q=>{
     const match = !s || q.text.toLowerCase().includes(s)||q.topic.toLowerCase().includes(s)||
-      q.trap.toLowerCase().includes(s)||q.hint.toLowerCase().includes(s)||
-      q.analogy.toLowerCase().includes(s)||q.answerText.toLowerCase().includes(s)||String(q.num)===s;
-    const isDone = objDone.has(q.num);
+      (q.trap||'').toLowerCase().includes(s)||(q.hint||'').toLowerCase().includes(s)||
+      (q.analogy||'').toLowerCase().includes(s)||q.answerText.toLowerCase().includes(s)||String(q.num)===s;
+    const isDone = getObjDone().has(q.num);
     const filt = currentFilter==='all'||(currentFilter==='done'&&isDone)||(currentFilter==='pending'&&!isDone);
     return match&&filt;
   });
   document.getElementById('result-count').textContent =
     filtered.length!==objectives.length ? `Showing ${filtered.length} of ${objectives.length} questions` : '';
   if(!filtered.length){list.innerHTML=`<div class="empty"><h3>No questions found</h3><p>Try a different search or filter.</p></div>`;return;}
+
   list.innerHTML = filtered.map(q=>{
-    const isDone = objDone.has(q.num);
+    const isDone = getObjDone().has(q.num);
+    const opts = q.options
+      ? q.options.map(o=>`<div style="font-size:.82rem;color:var(--muted);padding:.2rem 0;">${o}</div>`).join('')
+      : '';
     return `<div class="q-card ${isDone?'done':''}" id="card-${q.num}">
       <div class="q-header" onclick="toggleCard(${q.num})">
         <div class="q-num">${q.num}</div>
@@ -469,10 +580,11 @@ function renderObjectives(){
       </div>
       <div class="q-details">
         <div class="topic-tag">📚 ${q.topic}</div>
+        ${opts ? `<div style="margin-top:.6rem;margin-bottom:.3rem;">${opts}</div>` : ''}
         <div class="detail-grid">
-          <div class="detail-item d-trap"><div class="detail-label">⚠️ Trap</div>${q.trap}</div>
-          <div class="detail-item d-hint"><div class="detail-label">💡 Hint</div>${q.hint}</div>
-          <div class="detail-item d-analogy"><div class="detail-label">🇳🇬 Nigerian Analogy</div>${q.analogy}</div>
+          <div class="detail-item d-trap"><div class="detail-label">⚠️ Trap</div>${q.trap||'Stay focused on the key concept.'}</div>
+          <div class="detail-item d-hint"><div class="detail-label">💡 Hint</div>${q.hint||'Think through the definition carefully.'}</div>
+          <div class="detail-item d-analogy"><div class="detail-label">🇳🇬 Nigerian Analogy</div>${q.analogy||'Apply real-life context to remember this.'}</div>
         </div>
         <div class="answer-box">
           <div class="answer-letter">${q.answerLetter}</div>
@@ -486,17 +598,15 @@ function renderObjectives(){
   }).join('');
 }
 
-// ══════════════════════════════════════════
-//  RENDER THEORY
-// ══════════════════════════════════════════
 function renderTheory(){
   const container = document.getElementById('theory-container');
+  const theory = getTheory();
   const s = searchTerm;
   const filtered = theory.filter(q=>{
     const match = !s || q.question.toLowerCase().includes(s)||q.modelAnswer.toLowerCase().includes(s)||
       q.examinerTip.toLowerCase().includes(s)||q.commonMistake.toLowerCase().includes(s)||
       q.section.toLowerCase().includes(s)||q.badge.toLowerCase().includes(s);
-    const isDone = thDone.has(q.id);
+    const isDone = getThDone().has(q.id);
     const filt = currentFilter==='all'||(currentFilter==='done'&&isDone)||(currentFilter==='pending'&&!isDone);
     return match&&filt;
   });
@@ -511,7 +621,7 @@ function renderTheory(){
   Object.keys(sections).forEach(sec=>{
     html+=`<div class="section-divider"><span>${sec}</span></div><div class="questions">`;
     sections[sec].forEach(q=>{
-      const isDone=thDone.has(q.id);
+      const isDone=getThDone().has(q.id);
       const kpList=q.keypoints.map(k=>`<li>${k}</li>`).join('');
       html+=`<div class="t-card ${isDone?'done':''}" id="card-${q.id}">
         <div class="t-header" onclick="toggleCard('${q.id}')">
@@ -547,14 +657,10 @@ function renderTheory(){
   container.innerHTML=html;
 }
 
-// ══════════════════════════════════════════
-//  SEARCH & FILTER
-// ══════════════════════════════════════════
 document.getElementById('search').addEventListener('input',e=>{
   searchTerm=e.target.value.toLowerCase().trim();
   if(currentTab==='objectives') renderObjectives(); else renderTheory();
 });
-
 document.querySelectorAll('.filter-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
     document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
@@ -564,11 +670,8 @@ document.querySelectorAll('.filter-btn').forEach(btn=>{
   });
 });
 
-// ══════════════════════════════════════════
-//  INIT
-// ══════════════════════════════════════════
-updateProgress();
-renderObjectives();
+// INIT — default to 2024
+switchYear('2024');
 </script>
 </body>
 </html>
